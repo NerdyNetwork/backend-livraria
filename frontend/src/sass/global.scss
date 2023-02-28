@@ -1,0 +1,19 @@
+:root {
+  --white: #fdfff7;
+  --black: #50514f;
+  --purple: #B4ADEA;
+  --green: #59FFA0;
+  --yellow: #FFED65;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--white);
+  color: var(--black);
+  font-family: "Inconsolata", sans-serif;
+}

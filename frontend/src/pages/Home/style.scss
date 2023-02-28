@@ -1,0 +1,16 @@
+@import "../../sass/components.scss";
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 100vh;
+  padding: 5rem;
+  gap: 1rem;
+}
+
+.title {
+  @extend .title;
+  font-size: 5rem;
+}

@@ -2,8 +2,10 @@ package com.livraria.livraria.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 
@@ -49,6 +51,10 @@ public class Livro implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "fornecedor_id")
 	private Fornecedor fornecedor;
+	
+	@ManyToMany
+	@JoinTable(name = "tb_livro_categoria", joinColumns = @JoinColumn(name = "livro_id"), inverseJoinColumns = @JoinColumn(name = "categoria_id"))
+	private Set<Categoria> categorias = new HashSet<>();
 	
 	public Livro() {
 	}
@@ -154,6 +160,10 @@ public class Livro implements Serializable{
 	
 	public void setFornecedor(Fornecedor fornecedor) {
 		this.fornecedor = fornecedor;
+	}
+	
+	public Set<Categoria> getCategorias() {
+		return categorias;
 	}
 
 	@Override

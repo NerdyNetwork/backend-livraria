@@ -2,11 +2,14 @@ package com.livraria.livraria.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.livraria.livraria.entities.enums.StatusDoPedido;
 
 import jakarta.persistence.Entity;
@@ -14,6 +17,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -36,6 +40,10 @@ public class Pedido implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;
+	
+	@JsonIgnore
+	@ManyToMany(mappedBy = "pedidos")
+	private List<Livro> livros = new ArrayList<>();
 	
 	public Pedido() {
 	}

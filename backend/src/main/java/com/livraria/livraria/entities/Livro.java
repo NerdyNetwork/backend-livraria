@@ -16,6 +16,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -41,10 +42,14 @@ public class Livro implements Serializable{
 	@JoinTable(name = "tb_livro_pedido", joinColumns = @JoinColumn(name = "livro_id"), inverseJoinColumns = @JoinColumn(name = "pedido_id"))
 	private List<Pedido> pedidos = new ArrayList<>();
 	
+	@ManyToOne
+	@JoinColumn(name = "autor_id")
+	private Autor autor;
+	
 	public Livro() {
 	}
 
-	public Livro(long id, String nome, String descricao, String editora, String isbn, int codigoDeBarras, TipoLivro tipoLivro) {
+	public Livro(long id, String nome, String descricao, String editora, String isbn, int codigoDeBarras, TipoLivro tipoLivro, Autor autor) {
 		this.id = id;
 		this.nome = nome;
 		this.descricao = descricao;
@@ -52,6 +57,7 @@ public class Livro implements Serializable{
 		this.isbn = isbn;
 		this.codigoDeBarras = codigoDeBarras;
 		setTipoLivro(tipoLivro);
+		this.autor = autor;
 	}
 
 	public long getId() {
@@ -114,6 +120,14 @@ public class Livro implements Serializable{
 	
 	public List<Pedido> getPedidos() {
 		return pedidos;
+	}
+	
+	public Autor getAutor() {
+		return autor;
+	}
+	
+	public void setAutor(Autor autor) {
+		this.autor = autor;
 	}
 
 	@Override

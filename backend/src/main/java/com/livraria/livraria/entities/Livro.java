@@ -46,9 +46,27 @@ public class Livro implements Serializable{
 	@JoinColumn(name = "autor_id")
 	private Autor autor;
 	
+	@ManyToOne
+	@JoinColumn(name = "fornecedor_id")
+	private Fornecedor fornecedor;
+	
 	public Livro() {
 	}
 
+	//Construtor para livro que tem fornecedor conhecido
+	public Livro(long id, String nome, String descricao, String editora, String isbn, int codigoDeBarras, TipoLivro tipoLivro, Autor autor, Fornecedor fornecedor) {
+		this.id = id;
+		this.nome = nome;
+		this.descricao = descricao;
+		this.editora = editora;
+		this.isbn = isbn;
+		this.codigoDeBarras = codigoDeBarras;
+		setTipoLivro(tipoLivro);
+		this.autor = autor;
+		this.fornecedor = fornecedor;
+	}
+	
+	//Construtor para livro sem fornecedor
 	public Livro(long id, String nome, String descricao, String editora, String isbn, int codigoDeBarras, TipoLivro tipoLivro, Autor autor) {
 		this.id = id;
 		this.nome = nome;
@@ -128,6 +146,14 @@ public class Livro implements Serializable{
 	
 	public void setAutor(Autor autor) {
 		this.autor = autor;
+	}
+	
+	public Fornecedor getFornecedor() {
+		return fornecedor;
+	}
+	
+	public void setFornecedor(Fornecedor fornecedor) {
+		this.fornecedor = fornecedor;
 	}
 
 	@Override

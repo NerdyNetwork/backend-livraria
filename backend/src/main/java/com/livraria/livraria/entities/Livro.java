@@ -30,7 +30,7 @@ public class Livro implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 	
 	private String nome;
 	private String descricao;
@@ -60,7 +60,7 @@ public class Livro implements Serializable{
 	}
 
 	//Construtor para livro que tem fornecedor conhecido
-	public Livro(long id, String nome, String descricao, String editora, String isbn, int codigoDeBarras, TipoLivro tipoLivro, Autor autor, Fornecedor fornecedor) {
+	public Livro(Long id, String nome, String descricao, String editora, String isbn, int codigoDeBarras, TipoLivro tipoLivro, Autor autor, Fornecedor fornecedor) {
 		this.id = id;
 		this.nome = nome;
 		this.descricao = descricao;
@@ -73,7 +73,7 @@ public class Livro implements Serializable{
 	}
 	
 	//Construtor para livro sem fornecedor
-	public Livro(long id, String nome, String descricao, String editora, String isbn, int codigoDeBarras, TipoLivro tipoLivro, Autor autor) {
+	public Livro(Long id, String nome, String descricao, String editora, String isbn, int codigoDeBarras, TipoLivro tipoLivro, Autor autor) {
 		this.id = id;
 		this.nome = nome;
 		this.descricao = descricao;
@@ -84,11 +84,11 @@ public class Livro implements Serializable{
 		this.autor = autor;
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

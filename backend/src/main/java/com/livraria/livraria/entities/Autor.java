@@ -25,7 +25,7 @@ public class Autor implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 	
 	private String nome;
 	private String biografia;
@@ -37,13 +37,13 @@ public class Autor implements Serializable{
 	public Autor() {
 	}
 	
-	public Autor(long id, String nome, String biografia) {
+	public Autor(Long id, String nome, String biografia) {
 		this.id = id;
 		this.nome = nome;
 		this.biografia = biografia;
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 

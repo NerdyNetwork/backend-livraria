@@ -30,7 +30,7 @@ public class Pedido implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant moment;
@@ -48,14 +48,14 @@ public class Pedido implements Serializable{
 	public Pedido() {
 	}
 	
-	public Pedido(long id, Instant moment, StatusDoPedido statusDoPedido, Usuario usuario) {
+	public Pedido(Long id, Instant moment, StatusDoPedido statusDoPedido, Usuario usuario) {
 		this.id = id;
 		this.moment = moment;
 		setStatusDoPedido(statusDoPedido);
 		this.usuario = usuario;
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 

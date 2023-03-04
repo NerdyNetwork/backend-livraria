@@ -9,6 +9,7 @@ import java.util.Set;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.livraria.livraria.entities.enums.TipoLivro;
 
 import jakarta.persistence.Entity;
@@ -40,8 +41,8 @@ public class Livro implements Serializable{
 	
 	private int tipoLivro;
 	
-	@ManyToMany
-	@JoinTable(name = "tb_livro_pedido", joinColumns = @JoinColumn(name = "livro_id"), inverseJoinColumns = @JoinColumn(name = "pedido_id"))
+	@JsonIgnore
+	@ManyToMany(mappedBy = "livros")
 	private List<Pedido> pedidos = new ArrayList<>();
 	
 	@ManyToOne

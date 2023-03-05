@@ -9,6 +9,7 @@ import java.util.Objects;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.livraria.livraria.entities.enums.StatusDoPedido;
 
 import jakarta.persistence.Entity;
@@ -37,6 +38,7 @@ public class Pedido implements Serializable{
 	
 	private Integer statusDoPedido;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;

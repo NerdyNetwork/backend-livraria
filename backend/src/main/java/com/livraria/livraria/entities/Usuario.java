@@ -7,8 +7,6 @@ import java.util.Objects;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -32,7 +30,6 @@ public class Usuario implements Serializable{
 	private String telefone;
 	private String senha;
 	
-	@JsonIgnore
 	@OneToMany(mappedBy = "usuario")
 	private List<Pedido> pedidos = new ArrayList<>();
 	

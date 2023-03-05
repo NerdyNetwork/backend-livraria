@@ -59,7 +59,7 @@ public class TestConfig implements CommandLineRunner{
 		pedidoRepository.saveAll(Arrays.asList(pedido1, pedido2, pedido3));
 		
 		Autor autor1 = new Autor(null, "Dale Carnegie", "Biogradia do Dale Carnegie");
-		Autor autor2 = new Autor(null, "NIcholas Boothman", "Biogradia do Nicholas Boothman");
+		Autor autor2 = new Autor(null, "Nicholas Boothman", "Biogradia do Nicholas Boothman");
 		Autor autor3 = new Autor(null, "Robert Lewandowyski", "Biografia do Robert");
 		
 		autorRepository.saveAll(Arrays.asList(autor1, autor2, autor3));

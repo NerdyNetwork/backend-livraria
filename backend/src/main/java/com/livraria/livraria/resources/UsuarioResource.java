@@ -39,7 +39,10 @@ public class UsuarioResource {
 	@GetMapping
 	public ResponseEntity<List<Usuario>> findAll() {
 		List<Usuario> list = usuarioService.findAll();
-		return ResponseEntity.ok().body(list);
+		if(list.size() != 0) {
+			return ResponseEntity.ok().body(list);
+		} 
+		return ResponseEntity.noContent().build();
 	}
 	
 	@PostMapping

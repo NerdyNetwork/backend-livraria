@@ -82,6 +82,7 @@ public class TestConfig implements CommandLineRunner{
 		livro1.getCategorias().add(categoria1);
 		livro2.getCategorias().add(categoria1);
 		livro3.getCategorias().add(categoria2);
+		livro3.getCategorias().add(categoria1);
 		
 		livroRepository.saveAll(Arrays.asList(livro1, livro2, livro3));
 		

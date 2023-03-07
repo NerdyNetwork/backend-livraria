@@ -1,9 +1,10 @@
 package com.livraria.livraria.entities.enums;
 
 public enum StatusDoPedido {
-	APROVADO(1),
-	NEGADO(2),
-	CANCELADO(3);
+	PENDENTE(1),
+	APROVADO(2),
+	NEGADO(3),
+	CANCELADO(4);
 	
 	private int code;
 	

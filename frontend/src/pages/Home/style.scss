@@ -1,6 +1,31 @@
 @import "../../sass/components.scss";
 
-.container {
+.infinity-animation {
+  background: black;
+  color: #fff;
+  padding: 1rem 0;
+  position: relative;
+
+  h5 {
+    width: 100%;
+    animation: infinity-animation infinite ease-in-out;
+    animation-duration: 3s;
+  }
+}
+
+@keyframes infinity-animation {
+  0% {
+    position: absolute;
+    left: 0;
+  }
+  100% {
+    position: absolute;
+    left: 100%;
+  }
+}
+
+.container-1 {
+  background: var(--green);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -8,9 +33,67 @@
   min-height: 100vh;
   padding: 5rem;
   gap: 1rem;
+
+  .subcontainer {
+    .title {
+      @extend .title;
+      font-size: 5rem;
+      margin-bottom: 3rem;
+    }
+
+    span {
+      font-size: 1.2rem;
+    }
+  
+    .search-input {
+      background: #fff;
+      display: flex;
+      flex-direction: row;
+      padding: 1rem;
+      margin-top: 3rem;
+      border-radius: 5rem;
+    
+      input, button {
+        font-size: 2rem;
+      }
+    
+      input {
+        width: 100%;
+        border: none;
+        font-family: "Inconsolata", sans-serif;
+      }
+    
+      button {
+        @extend .button;
+      }
+    }
+  }
 }
 
-.title {
-  @extend .title;
-  font-size: 5rem;
+.container-2 {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5rem;
+
+  .title {
+    @extend .title;
+    font-size: 3rem;
+  }
+  
+  .subcontainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 4rem;
+    gap: 1rem;
+
+    img {
+      width: 10%;
+      border: var(--border-config);
+      box-shadow: var(--box-shadow-config);
+    }
+  }
 }
+
+

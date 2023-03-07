@@ -1,3 +1,23 @@
 .title {
   font-family: "Climate Crisis", sans-serif;
 }
+
+.button, .input {
+  font-family: "Inconsolata", sans-serif;
+  border-radius: 5rem;
+}
+
+.button {
+  cursor: pointer;
+  background: var(--green);
+  color: #000;
+  padding: 1rem;
+  border: var(--border-config);
+  font-weight: 900;
+  transition: .1s;
+  
+  &:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: var(--box-shadow-config);
+  }
+}

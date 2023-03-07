@@ -1,5 +1,9 @@
 :root {
+  --border-config: 3.5px solid #000;
+  --box-shadow-config: 3px 3px 0;
+
   --white: #fdfff7;
+  --gray: #e5e7de;
   --black: #50514f;
   --purple: #B4ADEA;
   --green: #59FFA0;
@@ -16,4 +20,6 @@ body {
   background: var(--white);
   color: var(--black);
   font-family: "Inconsolata", sans-serif;
+  font-weight: 700;
+  color: #000;
 }

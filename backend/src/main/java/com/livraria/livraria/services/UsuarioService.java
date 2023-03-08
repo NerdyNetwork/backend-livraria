@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.livraria.livraria.entities.Usuario;
@@ -20,6 +21,9 @@ public class UsuarioService {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+	
+	@Autowired
+	private PasswordEncoder encoder;
 
 	public Usuario findById(Long id) {
 		Optional<Usuario> obj = usuarioRepository.findById(id);
@@ -30,8 +34,14 @@ public class UsuarioService {
 		List<Usuario> listUsuario = usuarioRepository.findAll();
 		return listUsuario;
 	}
+	
+	public Usuario findByEmail(String email) {
+		Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
+		return usuario.orElseThrow(() -> new ResourceNotFoundException(email));
+	}
 
 	public Usuario insert(Usuario usuario) {
+		usuario.setSenha(encoder.encode(usuario.getSenha()));
 		return usuarioRepository.save(usuario);
 	}
 

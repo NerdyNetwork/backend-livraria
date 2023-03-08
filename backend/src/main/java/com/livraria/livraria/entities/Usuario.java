@@ -7,6 +7,9 @@ import java.util.Objects;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,6 +34,8 @@ public class Usuario implements Serializable{
 	@Column(unique = true)
 	private String email;
 	private String telefone;
+	
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private String senha;
 	
 	@OneToMany(mappedBy = "usuario")

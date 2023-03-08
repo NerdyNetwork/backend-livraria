@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.livraria.livraria.entities.Categoria;
 import com.livraria.livraria.services.CategoriaService;
+import com.livraria.livraria.services.exceptions.DatabaseException;
 import com.livraria.livraria.services.exceptions.ResourceNotFoundException;
 
 @RestController
@@ -40,6 +42,16 @@ public class CategoriaResource {
 	public ResponseEntity<List<Categoria>> findAll() {
 		List<Categoria> categorias = categoriaService.findAll();
 		return ResponseEntity.ok().body(categorias);
+	}
+	
+	@GetMapping(value = "/categorias")
+	public ResponseEntity<Categoria> findByNome(@RequestParam String nome) {
+		try {
+			Categoria categoria = categoriaService.findByNome(nome);
+			return ResponseEntity.ok().body(categoria);
+		} catch(DatabaseException e) {
+			return ResponseEntity.notFound().build();
+		}
 	}
 	
 	@PostMapping

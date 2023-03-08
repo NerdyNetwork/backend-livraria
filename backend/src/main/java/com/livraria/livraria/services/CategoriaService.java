@@ -31,6 +31,16 @@ public class CategoriaService {
 		return categorias;
 	}
 	
+	public Categoria findByNome(String nome) {
+		List<Categoria> categorias = categoriaRepository.findAll();
+		for(Categoria categoria : categorias) {
+			if(categoria.getNome().equals(nome)) {
+				return categoria;
+			}
+		}
+		throw new DatabaseException("Categoria não encontrada!");
+	}
+	
 	public Categoria insert(Categoria categoria) {
 		categoria = categoriaRepository.save(categoria);
 		return categoria;

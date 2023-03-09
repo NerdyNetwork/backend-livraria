@@ -9,8 +9,10 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.livraria.livraria.entities.Pedido;
+import com.livraria.livraria.entities.Usuario;
 import com.livraria.livraria.entities.dtos.PedidoUpdateDTO;
 import com.livraria.livraria.repositories.PedidoRepository;
+import com.livraria.livraria.repositories.UsuarioRepository;
 import com.livraria.livraria.services.exceptions.DatabaseException;
 import com.livraria.livraria.services.exceptions.ResourceNotFoundException;
 
@@ -22,6 +24,9 @@ public class PedidoService {
 	@Autowired
 	private PedidoRepository pedidoRepository;
 	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
+	
 	public Pedido findById(Long id) {
 		Optional<Pedido> pedido = pedidoRepository.findById(id);
 		return pedido.orElseThrow(() -> new ResourceNotFoundException(id));
@@ -32,7 +37,9 @@ public class PedidoService {
 		return listPedido;
 	}
 	
-	public Pedido insert(Pedido pedido) {
+	public Pedido insert(Pedido pedido, Long usuario_id) {
+		Usuario usuario = usuarioRepository.findById(usuario_id).get();
+		pedido.setUsuario(usuario);
 		return pedidoRepository.save(pedido);
 	}
 	

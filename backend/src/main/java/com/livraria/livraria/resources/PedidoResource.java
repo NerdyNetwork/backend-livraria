@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -47,8 +48,8 @@ public class PedidoResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Pedido> insert(@RequestBody Pedido pedido) {
-		pedido = pedidoService.insert(pedido);
+	public ResponseEntity<Pedido> insert(@RequestBody Pedido pedido, @RequestParam Long usuario_id) {
+		pedido = pedidoService.insert(pedido, usuario_id);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(pedido.getId()).toUri();
 		return ResponseEntity.created(uri).body(pedido);
 	}

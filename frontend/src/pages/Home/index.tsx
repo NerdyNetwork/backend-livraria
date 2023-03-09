@@ -1,6 +1,6 @@
 import "./style.scss";
-import bookSvg from "../../assets/undraw_books.svg";
 import bookImage from "../../assets/bookimage.jpeg";
+import { Player } from "@lottiefiles/react-lottie-player";
 
 const Container1 = () => (
   <div className="container-1">
@@ -17,7 +17,13 @@ const Container1 = () => (
         <button>Pesquisar</button>
       </div>
     </div>
-    <img src={bookSvg} alt="imagem principal" />
+    <Player
+      src="https://assets9.lottiefiles.com/packages/lf20_d0gmxgy5KG.json"
+      className="player"
+      loop
+      autoplay
+      style={{width:500}}
+    />
   </div>
 );
 
@@ -38,7 +44,12 @@ export const Home = () => {
   return (
     <div>
       <div className="infinity-animation">
-        <h5>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corrupti repudiandae, debitis perspiciatis distinctio dignissimos dolore facilis unde, itaque doloremque sed blanditiis eaque molestiae alias commodi, consequuntur voluptatem? Recusandae, accusantium ipsam.</h5>
+        <h5>
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corrupti
+          repudiandae, debitis perspiciatis distinctio dignissimos dolore
+          facilis unde, itaque doloremque sed blanditiis eaque molestiae alias
+          commodi, consequuntur voluptatem? Recusandae, accusantium ipsam.
+        </h5>
       </div>
 
       <Container1 />

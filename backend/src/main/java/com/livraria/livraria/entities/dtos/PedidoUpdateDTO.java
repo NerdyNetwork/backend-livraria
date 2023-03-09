@@ -5,7 +5,7 @@ import java.time.Instant;
 import com.livraria.livraria.entities.enums.StatusDoPedido;
 
 public class PedidoUpdateDTO {
-	private Instant moment = Instant.now();
+	private Instant momentUpdated = Instant.now();
 	private Integer statusDoPedido;
 	
 	public PedidoUpdateDTO() {
@@ -15,12 +15,12 @@ public class PedidoUpdateDTO {
 		setStatusDoPedido(statusDoPedido);
 	}
 	
-	public Instant getMoment() {
-		return moment;
+	public Instant getMomentUpdated() {
+		return momentUpdated;
 	}
 	
-	public void setMoment(Instant moment) {
-		this.moment = moment;
+	public void setMomentUpdated(Instant momentUpdated) {
+		this.momentUpdated = momentUpdated;
 	}
 	
 	public StatusDoPedido getStatusDoPedido() {

@@ -58,7 +58,7 @@ public class PedidoService {
 	
 	private void updatePedido(Pedido pedido, PedidoUpdateDTO novoPedido) {
 		if(novoPedido.getStatusDoPedido() != pedido.getStatusDoPedido()) {
-			pedido.setMoment(novoPedido.getMoment());
+			pedido.setMomentUpdated(novoPedido.getMomentUpdated());
 			pedido.setStatusDoPedido(novoPedido.getStatusDoPedido());
 		}
 	}

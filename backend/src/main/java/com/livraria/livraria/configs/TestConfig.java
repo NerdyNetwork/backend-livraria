@@ -1,6 +1,5 @@
 package com.livraria.livraria.configs;
 
-import java.time.Instant;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,9 +51,9 @@ public class TestConfig implements CommandLineRunner{
 		
 		usuarioRepository.saveAll(Arrays.asList(user1, user2));
 		
-		Pedido pedido1 = new Pedido(null, Instant.now(), StatusDoPedido.APROVADO, user1);
-		Pedido pedido2 = new Pedido(null, Instant.now(), StatusDoPedido.CANCELADO, user1);
-		Pedido pedido3 = new Pedido(null, Instant.now(), StatusDoPedido.APROVADO, user2);
+		Pedido pedido1 = new Pedido(null, StatusDoPedido.APROVADO, user1);
+		Pedido pedido2 = new Pedido(null, StatusDoPedido.CANCELADO, user1);
+		Pedido pedido3 = new Pedido(null, StatusDoPedido.APROVADO, user2);
 		
 		pedidoRepository.saveAll(Arrays.asList(pedido1, pedido2, pedido3));
 		

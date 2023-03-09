@@ -34,7 +34,10 @@ public class Pedido implements Serializable{
 	private Long id;
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
-	private Instant moment;
+	private Instant momentCreated = Instant.now();
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
+	private Instant momentUpdated = Instant.now();
 	
 	private Integer statusDoPedido;
 	
@@ -50,9 +53,8 @@ public class Pedido implements Serializable{
 	public Pedido() {
 	}
 	
-	public Pedido(Long id, Instant moment, StatusDoPedido statusDoPedido, Usuario usuario) {
+	public Pedido(Long id, StatusDoPedido statusDoPedido, Usuario usuario) {
 		this.id = id;
-		this.moment = moment;
 		setStatusDoPedido(statusDoPedido);
 		this.usuario = usuario;
 	}
@@ -61,12 +63,20 @@ public class Pedido implements Serializable{
 		return id;
 	}
 
-	public Instant getMoment() {
-		return moment;
+	public Instant getMomentCreated() {
+		return momentCreated;
 	}
 
-	public void setMoment(Instant moment) {
-		this.moment = moment;
+	public void setMomentCreated(Instant momentCreated) {
+		this.momentCreated = momentCreated;
+	}
+	
+	public Instant getMomentUpdated() {
+		return momentUpdated;
+	}
+	
+	public void setMomentUpdated(Instant momentUpdated) {
+		this.momentUpdated = momentUpdated;
 	}
 
 	public StatusDoPedido getStatusDoPedido() {

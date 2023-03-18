@@ -56,6 +56,16 @@ public class LivroService {
 		}
 	}
 	
+	public Livro updateQuantiVendasLivro(Long id) {
+		try {
+			Livro livro = livroRepository.getReferenceById(id);
+			livro.atualizarQuantidadeCompras();
+			return livroRepository.save(livro);
+		}catch(EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
+	}
+	
 	private void updateLivro(Livro livro, Livro novoLivro) {
 		livro.setNome(novoLivro.getNome());
 		livro.setDescricao(novoLivro.getDescricao());
@@ -64,6 +74,7 @@ public class LivroService {
 		livro.setCodigoDeBarras(novoLivro.getCodigoDeBarras());
 		livro.setAutor(novoLivro.getAutor());
 		livro.setFornecedor(novoLivro.getFornecedor());
+		livro.setQuantidadeCompras(novoLivro.getQuantidadeCompras());
 		if(novoLivro.getCategorias().size() != 0) {
 			livro.getCategorias().clear();
 			for(Categoria categoria : novoLivro.getCategorias()) {

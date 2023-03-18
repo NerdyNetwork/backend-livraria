@@ -38,6 +38,7 @@ public class Livro implements Serializable{
 	private String editora;
 	private String isbn;
 	private int codigoDeBarras;
+	private int quantidadeCompras = 0;
 	
 	private int tipoLivro;
 	
@@ -132,6 +133,14 @@ public class Livro implements Serializable{
 	public void setCodigoDeBarras(int codigoDeBarras) {
 		this.codigoDeBarras = codigoDeBarras;
 	}
+	
+	public int getQuantidadeCompras() {
+		return quantidadeCompras;
+	}
+	
+	public void setQuantidadeCompras(int quantidadeCompras) {
+		this.quantidadeCompras = quantidadeCompras;
+	}
 
 	public TipoLivro getTipoLivro() {
 		return TipoLivro.valueOf(tipoLivro);
@@ -167,6 +176,10 @@ public class Livro implements Serializable{
 		return categorias;
 	}
 
+	public void atualizarQuantidadeCompras() {
+		setQuantidadeCompras(getQuantidadeCompras() + 1);
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

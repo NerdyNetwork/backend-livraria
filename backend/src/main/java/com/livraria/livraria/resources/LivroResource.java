@@ -2,6 +2,7 @@ package com.livraria.livraria.resources;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +35,12 @@ public class LivroResource {
 		} catch(ResourceNotFoundException e) {
 			return ResponseEntity.notFound().build();
 		}
+	}
+	
+	@GetMapping(value = "/bestsellers")
+	public ResponseEntity<Set<Livro>> bestSellersLivros() {
+		Set<Livro> bestSellers = livroService.bestSellers();
+		return ResponseEntity.ok().body(bestSellers);
 	}
 	
 	@GetMapping

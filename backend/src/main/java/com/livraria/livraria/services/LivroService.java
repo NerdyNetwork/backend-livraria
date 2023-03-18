@@ -1,7 +1,10 @@
 package com.livraria.livraria.services;
 
+import java.util.Comparator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -30,6 +33,20 @@ public class LivroService {
 	public List<Livro> findAll() {
 		List<Livro> livros = livroRepository.findAll();
 		return livros;
+	}
+	
+	public Set<Livro> bestSellers() {
+		List<Livro> allLivros = livroRepository.findAll();
+		Set<Livro> bestSellers = new LinkedHashSet<>();
+		
+		allLivros.sort(Comparator.comparing(Livro::getQuantidadeCompras).reversed());
+		
+		for(int i = 0; i < 20; i++) {
+			Livro livroSelecionado = allLivros.get(i);
+			bestSellers.add(livroSelecionado);
+		}
+		
+		return bestSellers;
 	}
 	
 	public Livro insert(Livro livro) {

@@ -21,10 +21,9 @@ const Container1 = () => (
     <Player
       src={bookanimation}
       
-      className="player"
       loop
       autoplay
-      style={{ width: 550 }}
+      style={{ width: 600 }}
     />
   </div>
 );

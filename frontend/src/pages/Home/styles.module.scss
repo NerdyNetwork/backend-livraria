@@ -1,40 +1,37 @@
 @import "../../sass/components.scss";
 
 .container-1 {
-  background: var(--green);
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  background: var(--wine);
+  color: var(--white);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   align-items: center;
   min-height: calc(100vh - 2rem);
-  padding: 5rem;
-  gap: 1rem;
+  padding: 0rem 5rem;
 
   .subcontainer {
     .title {
       @extend .title;
-      font-size: 5rem;
-      margin-bottom: 3rem;
+      font-size: 4rem;
+      margin-bottom: 2rem;
     }
 
-    span {
-      font-size: 1.2rem;
-    }
-  
     .search-input {
-      background: #fff;
+      margin-top: 2rem;
+      background: var(--white);
       display: flex;
       flex-direction: row;
       padding: 1rem;
-      margin-top: 3rem;
-      border-radius: 5rem;
-      box-shadow: 2px 2px 5px gray;
+      border-radius: 1rem 5rem 5rem 1rem;
+      box-shadow: 2px 2px 5px var(--yellow);
     
       input, button {
         font-size: 2rem;
       }
     
       input {
+        background: var(--white);
+        color: var(--wine);
         font-family: sans-serif;
         padding: 1rem;
         width: 100%;
@@ -77,8 +74,9 @@
 .infinite-animation {
   display: flex;
   overflow: hidden;
-  background: #000;
-  color: #fff;
+  border-top: 2px solid var(--white);
+  background: var(--red);
+  color: var(--white);
   padding: 0.5rem;
 
   p {

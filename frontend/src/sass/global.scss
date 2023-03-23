@@ -2,12 +2,13 @@
   --border-config: 3.5px solid #000;
   --box-shadow-config: 3px 3px 0;
 
-  --white: #fdfff7;
-  --gray: #e5e7de;
-  --black: #50514f;
-  --purple: #B4ADEA;
-  --green: #59FFA0;
-  --yellow: #FFED65;
+  --white: #eff7cf;
+  --green: #bad9b5;
+  --black: #3a3a3a;
+  --wine: #420c14;
+  --red: #732c2c;
+  --light-red: #904747;
+  --yellow: #aba361;
 }
 
 * {
@@ -18,8 +19,29 @@
 
 body {
   background: var(--white);
-  color: var(--black);
   font-family: sans-serif;
   font-weight: 700;
   color: #000;
+}
+
+/* width */
+::-webkit-scrollbar {
+  background: var(--black);
+  width: 1rem;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--light-red);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--red);
 }

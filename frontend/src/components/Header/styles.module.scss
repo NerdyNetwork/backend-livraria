@@ -1,0 +1,26 @@
+.container {
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background: var(--wine);
+  padding: 1rem 5rem;
+  z-index: 1;
+
+  div {
+    display: flex;
+    align-items: center;
+
+    &:last-child {
+      gap: 1.5rem;
+      color: var(--white);
+    }
+    
+    span {
+      color: var(--white);
+      margin-left: 1rem;
+    }
+  }
+
+}

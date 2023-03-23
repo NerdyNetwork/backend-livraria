@@ -1,7 +1,10 @@
 package com.livraria.livraria.services;
 
+import java.util.Comparator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -32,6 +35,20 @@ public class LivroService {
 		return livros;
 	}
 	
+	public Set<Livro> bestSellers() {
+		List<Livro> allLivros = livroRepository.findAll();
+		Set<Livro> bestSellers = new LinkedHashSet<>();
+		
+		allLivros.sort(Comparator.comparing(Livro::getQuantidadeCompras).reversed());
+		
+		for(int i = 0; i < 20; i++) {
+			Livro livroSelecionado = allLivros.get(i);
+			bestSellers.add(livroSelecionado);
+		}
+		
+		return bestSellers;
+	}
+	
 	public Livro insert(Livro livro) {
 		return livroRepository.save(livro);
 	}
@@ -56,6 +73,16 @@ public class LivroService {
 		}
 	}
 	
+	public Livro updateQuantiVendasLivro(Long id) {
+		try {
+			Livro livro = livroRepository.getReferenceById(id);
+			livro.atualizarQuantidadeCompras();
+			return livroRepository.save(livro);
+		}catch(EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
+	}
+	
 	private void updateLivro(Livro livro, Livro novoLivro) {
 		livro.setNome(novoLivro.getNome());
 		livro.setDescricao(novoLivro.getDescricao());
@@ -64,6 +91,7 @@ public class LivroService {
 		livro.setCodigoDeBarras(novoLivro.getCodigoDeBarras());
 		livro.setAutor(novoLivro.getAutor());
 		livro.setFornecedor(novoLivro.getFornecedor());
+		livro.setQuantidadeCompras(novoLivro.getQuantidadeCompras());
 		if(novoLivro.getCategorias().size() != 0) {
 			livro.getCategorias().clear();
 			for(Categoria categoria : novoLivro.getCategorias()) {

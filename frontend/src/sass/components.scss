@@ -1,5 +1,11 @@
+@font-face {
+  font-family: 'Title Font';
+  src: url('../assets/3d07f5abf272fbb5670d02ed687453d0.woff2') format('woff2');
+}
+
 .title {
-  font-family: "Climate Crisis", sans-serif;
+  font-family: 'Title Font';
+  text-transform: uppercase;
 }
 
 .button, .input {
@@ -9,9 +15,9 @@
 
 .button {
   cursor: pointer;
+  padding: 1rem;
   background: var(--green);
   color: #000;
-  padding: 1rem;
   border: var(--border-config);
   font-weight: 900;
   transition: .1s;

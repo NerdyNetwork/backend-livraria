@@ -1,11 +1,12 @@
 import "./style.scss";
 import bookImage from "../../assets/bookimage.jpeg";
 import { Player } from "@lottiefiles/react-lottie-player";
+import bookanimation from "../../assets/bookanimation.json";
 
 const Container1 = () => (
   <div className="container-1">
     <div className="subcontainer">
-      <h1 className="title">Frontend Iniciado</h1>
+      <h1 className="title">Os melhores livros</h1>
       <span>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores ducimus
         repudiandae, pariatur obcaecati officiis deserunt praesentium in
@@ -18,11 +19,12 @@ const Container1 = () => (
       </div>
     </div>
     <Player
-      src="https://assets9.lottiefiles.com/packages/lf20_d0gmxgy5KG.json"
+      src={bookanimation}
+      
       className="player"
       loop
       autoplay
-      style={{width:500}}
+      style={{ width: 550 }}
     />
   </div>
 );
@@ -43,13 +45,13 @@ const Container2 = () => (
 export const Home = () => {
   return (
     <div>
-      <div className="infinity-animation">
-        <h5>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corrupti
-          repudiandae, debitis perspiciatis distinctio dignissimos dolore
-          facilis unde, itaque doloremque sed blanditiis eaque molestiae alias
-          commodi, consequuntur voluptatem? Recusandae, accusantium ipsam.
-        </h5>
+      <div className="infinite-animation">
+        <p>
+          <span style={{margin: "0 20px"}}>
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Earum nihil, adipisci, quasi qui explicabo ipsum similique molestias nobis, atque dolore nostrum velit impedit doloremque aut cumque recusandae fugit perspiciatis repudiandae.
+          </span>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Earum nihil, adipisci, quasi qui explicabo ipsum similique molestias nobis, atque dolore nostrum velit impedit doloremque aut cumque recusandae fugit perspiciatis repudiandae.
+        </p>
       </div>
 
       <Container1 />

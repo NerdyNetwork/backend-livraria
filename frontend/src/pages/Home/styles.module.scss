@@ -12,7 +12,7 @@
   .subcontainer {
     .title {
       @extend .title;
-      font-size: 4rem;
+      font-size: 3.5rem;
       margin-bottom: 2rem;
     }
 
@@ -81,7 +81,7 @@
 
   p {
     white-space: nowrap;
-    animation: scrollLeft 12s infinite linear;
+    animation: scrollLeft 45s infinite linear;
   }
 }
   

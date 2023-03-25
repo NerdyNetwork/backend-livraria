@@ -1,6 +1,7 @@
 package com.livraria.livraria.services;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.livraria.livraria.entities.Pedido;
 import com.livraria.livraria.entities.Usuario;
 import com.livraria.livraria.repositories.UsuarioRepository;
 import com.livraria.livraria.services.exceptions.DatabaseException;
@@ -38,6 +40,15 @@ public class UsuarioService {
 	public Usuario findByEmail(String email) {
 		Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
 		return usuario.orElseThrow(() -> new ResourceNotFoundException(email));
+	}
+	
+	public List<Pedido> findPedidoByUsuario(Long id) {
+		try {
+			Optional<Usuario> usuario = usuarioRepository.findById(id);
+			return usuario.get().getPedidos();
+		} catch(NoSuchElementException e) {
+			throw new ResourceNotFoundException(id);
+		}
 	}
 
 	public Usuario insert(Usuario usuario) {

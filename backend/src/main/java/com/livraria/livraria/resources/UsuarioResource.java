@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.livraria.livraria.entities.Pedido;
 import com.livraria.livraria.entities.Usuario;
 import com.livraria.livraria.services.UsuarioService;
 import com.livraria.livraria.services.exceptions.ResourceNotFoundException;
@@ -64,6 +65,16 @@ public class UsuarioResource {
 		HttpStatus status = (valid) ? HttpStatus.OK : HttpStatus.UNAUTHORIZED;
 		
 		return ResponseEntity.status(status).body(valid);
+	}
+	
+	@GetMapping(value = "/{id}/pedidos")
+	public ResponseEntity<List<Pedido>> findPedidoByUsuario(@PathVariable Long id) {
+		try {
+			List<Pedido> pedidos = usuarioService.findPedidoByUsuario(id);
+			return ResponseEntity.status(HttpStatus.OK).body(pedidos);
+		} catch(ResourceNotFoundException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
 	}
 	
 	@PostMapping(value = "/cadastrar")

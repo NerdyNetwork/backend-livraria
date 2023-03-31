@@ -96,7 +96,11 @@ public class UsuarioResource {
 	
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<Usuario> updateUsuario(@PathVariable Long id, @RequestBody Usuario usuario){
-		usuario = usuarioService.updateUsuario(id, usuario);
-		return ResponseEntity.ok().body(usuario);
+		try {
+			usuario = usuarioService.updateUsuario(id, usuario);
+			return ResponseEntity.ok().body(usuario);
+		} catch(ResourceNotFoundException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
 	}
 }

@@ -1,6 +1,7 @@
 package com.livraria.livraria.services;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,9 +44,13 @@ public class PedidoService {
 	}
 
 	public Pedido insert(Pedido pedido, Long usuario_id) {
-		Usuario usuario = usuarioRepository.findById(usuario_id).get();
-		pedido.setUsuario(usuario);
-		return pedidoRepository.save(pedido);
+		try {
+			Usuario usuario = usuarioRepository.findById(usuario_id).get();
+			pedido.setUsuario(usuario);
+			return pedidoRepository.save(pedido);
+		} catch (NoSuchElementException e) {
+			throw new ResourceNotFoundException(usuario_id);
+		}
 	}
 
 	public void deleteById(Long id) {

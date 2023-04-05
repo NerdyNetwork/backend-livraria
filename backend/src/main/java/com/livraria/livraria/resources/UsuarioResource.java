@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.livraria.livraria.entities.Pedido;
 import com.livraria.livraria.entities.Usuario;
 import com.livraria.livraria.services.UsuarioService;
 import com.livraria.livraria.services.exceptions.ResourceNotFoundException;
@@ -66,6 +67,16 @@ public class UsuarioResource {
 		return ResponseEntity.status(status).body(valid);
 	}
 	
+	@GetMapping(value = "/{id}/pedidos")
+	public ResponseEntity<List<Pedido>> findPedidoByUsuario(@PathVariable Long id) {
+		try {
+			List<Pedido> pedidos = usuarioService.findPedidoByUsuario(id);
+			return ResponseEntity.status(HttpStatus.OK).body(pedidos);
+		} catch(ResourceNotFoundException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+	}
+	
 	@PostMapping(value = "/cadastrar")
 	public ResponseEntity<Usuario> insert(@RequestBody Usuario usuario) {
 		try {
@@ -85,7 +96,11 @@ public class UsuarioResource {
 	
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<Usuario> updateUsuario(@PathVariable Long id, @RequestBody Usuario usuario){
-		usuario = usuarioService.updateUsuario(id, usuario);
-		return ResponseEntity.ok().body(usuario);
+		try {
+			usuario = usuarioService.updateUsuario(id, usuario);
+			return ResponseEntity.ok().body(usuario);
+		} catch(ResourceNotFoundException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
 	}
 }

@@ -1,12 +1,27 @@
+@import "../../sass/components.scss";
+
 .container {
   position: fixed;
   display: flex;
+  top: 0;
   justify-content: space-between;
   align-items: center;
   width: 100%;
   background: var(--wine);
   padding: 1rem 5rem;
   z-index: 1;
+
+  .title {
+    @extend .title-component;
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: var(--white);
+  }
+
+  span {
+    color: var(--white);
+    margin-left: 1rem;
+  }
 
   div {
     display: flex;
@@ -16,11 +31,5 @@
       gap: 1.5rem;
       color: var(--white);
     }
-    
-    span {
-      color: var(--white);
-      margin-left: 1rem;
-    }
   }
-
 }

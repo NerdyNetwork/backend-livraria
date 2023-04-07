@@ -1,17 +1,19 @@
 @import "../../sass/components.scss";
 
 .container-1 {
+  $SCROLL_SIZE: calc(2rem + 2px);
+
   background: var(--wine);
   color: var(--white);
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
-  min-height: calc(100vh - 2rem);
-  padding: 0rem 5rem;
-
+  height: calc(100vh - var(--header-size) - $SCROLL_SIZE);
+  padding: 0 5rem;
+  
   .subcontainer {
     .title {
-      @extend .title;
+      @extend .title-component;
       font-size: 3.5rem;
       margin-bottom: 2rem;
     }
@@ -39,7 +41,7 @@
       }
     
       button {
-        @extend .button;
+        @extend .button-component;
       }
     }
   }
@@ -53,20 +55,29 @@
   margin-top: 5rem;
 
   .title {
-    @extend .title;
+    @extend .title-component;
     font-size: 3rem;
   }
   
   .subcontainer {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    width: 80%;
     justify-content: center;
     margin-top: 4rem;
     gap: 1rem;
 
     img {
-      width: 10%;
+      width: 100%;
       border: var(--border-config);
       box-shadow: var(--box-shadow-config);
+      cursor: pointer;
+      transition: .1s all;
+
+      &:hover {
+        transform: translate(-.1rem, -.1rem);
+        box-shadow: 0.288rem 0.288rem;
+      }
     }
   }
 }

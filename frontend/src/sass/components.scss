@@ -1,27 +1,29 @@
 @font-face {
-  font-family: 'Title Font';
-  src: url('../assets/3d07f5abf272fbb5670d02ed687453d0.woff2') format('woff2');
+  font-family: "Title Font";
+  src: url("../assets/3d07f5abf272fbb5670d02ed687453d0.woff2") format("woff2");
 }
 
-.title {
-  font-family: 'Title Font';
+.title-component {
+  font-family: "Title Font", sans-serif;
   text-transform: uppercase;
 }
 
-.button, .input {
+.button-component,
+.input-component {
   font-family: "Inconsolata", sans-serif;
   border-radius: 5rem;
 }
 
-.button {
+.button-component {
   cursor: pointer;
   padding: 1rem;
   background: var(--green);
   color: #000;
   border: var(--border-config);
   font-weight: 900;
-  transition: .1s;
-  
+  transition: 0.1s;
+  font-size: 1.5rem;
+
   &:hover {
     transform: translate(-3px, -3px);
     box-shadow: var(--box-shadow-config);

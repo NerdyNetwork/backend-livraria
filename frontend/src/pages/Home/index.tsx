@@ -1,9 +1,11 @@
-import styles from "./styles.module.scss";
-import bookImage from "../../assets/bookimage.jpeg";
 import { Player } from "@lottiefiles/react-lottie-player";
-import { Header } from "../../components/Header";
+import { useNavigate } from "react-router-dom";
+import bookImage from "../../assets/bookimage.jpeg";
+import styles from "./styles.module.scss";
 
 export const Home = () => {
+  const navigate = useNavigate();
+
   const spamPhrases = [
     "O sucesso em forma de livro!",
     "Os melhores livros para enriquecer sua mente!",
@@ -29,14 +31,12 @@ export const Home = () => {
 
   return (
     <div>
-      <Header />
-
       <div className={styles["container-1"]}>
         <div className={styles.subcontainer}>
           <p className={styles.title}>Descubra novas histórias!</p>
           <span>
-            Abra as portas da sua imaginação e mergulhe no mundo dos
-            livros conosco, abra um livro e comece uma aventura!
+            Abra as portas da sua imaginação e mergulhe no mundo dos livros
+            conosco, abra um livro e comece uma aventura!
           </span>
           <div className={styles["search-input"]}>
             <input type="text" placeholder="Pesquisar livro" />
@@ -53,10 +53,14 @@ export const Home = () => {
       <div className={styles["infinite-animation"]}>
         <p>
           <span>
-            {spamPhrases.map(v => <span style={{marginRight: 10}}>{v}</span>)}
+            {spamPhrases.map((v, i) => (
+              <span key={i} style={{ marginRight: 10 }}>{v}</span>
+            ))}
           </span>
           <span>
-            {spamPhrases.map(v => <span style={{marginRight: 10}}>{v}</span>)}
+            {spamPhrases.map((v, i) => (
+              <span key={i} style={{ marginRight: 10 }}>{v}</span>
+            ))}
           </span>
         </p>
       </div>
@@ -64,11 +68,31 @@ export const Home = () => {
       <div className={styles["container-2"]}>
         <h1 className={styles.title}>Livros mais vendidos</h1>
         <div className={styles.subcontainer}>
-          <img src={bookImage} alt="capa do livro" />
-          <img src={bookImage} alt="capa do livro" />
-          <img src={bookImage} alt="capa do livro" />
-          <img src={bookImage} alt="capa do livro" />
-          <img src={bookImage} alt="capa do livro" />
+          <img
+            src={bookImage}
+            alt="capa do livro"
+            onClick={() => navigate("/books/1")}
+          />
+          <img
+            src={bookImage}
+            alt="capa do livro"
+            onClick={() => navigate("/books/1")}
+          />
+          <img
+            src={bookImage}
+            alt="capa do livro"
+            onClick={() => navigate("/books/1")}
+          />
+          <img
+            src={bookImage}
+            alt="capa do livro"
+            onClick={() => navigate("/books/1")}
+          />
+          <img
+            src={bookImage}
+            alt="capa do livro"
+            onClick={() => navigate("/books/1")}
+          />
         </div>
       </div>
     </div>

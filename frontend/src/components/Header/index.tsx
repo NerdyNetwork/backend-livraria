@@ -1,12 +1,12 @@
 import styles from "./styles.module.scss";
-import "../../sass/components.scss";
 import { MenuIcon } from "../MenuIcon";
+import { Link } from "react-router-dom";
 
 export const Header = () => {
   return (
     <div className={styles.container}>
       <div>
-        <p className="title" style={{ fontSize: "1.5rem", color: "var(--white)" }}>BOOKSTORE</p>
+        <Link to="/" className={styles.title}>BOOKSTORE</Link>
 
         <MenuIcon />
 

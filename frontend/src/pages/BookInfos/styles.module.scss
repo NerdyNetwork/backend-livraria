@@ -1,0 +1,58 @@
+@import "../../sass/components.scss";
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding-top: 2rem;
+
+  .book {
+    display: flex;
+    justify-content: center;
+    
+    img {
+      width: 50%;
+      border: var(--border-config);
+      cursor: pointer;
+      transition: .1s all;
+
+      &:hover {
+        transform: translate(-.188rem, -.188rem);
+        box-shadow: var(--box-shadow-config);
+      }
+    }
+  }
+
+  .menu-sale {
+    width: 90%;
+    
+    .price-amount {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .buttons {
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+  
+      .button {
+        @extend .button-component;
+        width: 100%;
+        
+        background-color: var(--green1);
+        border-radius: 5px;
+      }
+    }
+  }
+
+  /* Chrome, Safari, Edge, Opera */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  
+}

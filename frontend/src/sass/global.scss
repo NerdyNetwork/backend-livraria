@@ -1,9 +1,13 @@
+@import "./components.scss";
+
 :root {
   --border-config: 3.5px solid #000;
-  --box-shadow-config: 3px 3px 0;
+  --box-shadow-config: 0.188rem 0.188rem 0 #000;
+  --header-size: 4rem;
 
   --white: #eff7cf;
   --green: #bad9b5;
+  --green1: #68cf58;
   --black: #3a3a3a;
   --wine: #420c14;
   --red: #732c2c;

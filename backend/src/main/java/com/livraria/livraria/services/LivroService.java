@@ -41,7 +41,7 @@ public class LivroService {
 		
 		allLivros.sort(Comparator.comparing(Livro::getQuantidadeCompras).reversed());
 		
-		for(int i = 0; i < 20; i++) {
+		for(int i = 0; i < ((allLivros.size() < 20) ? allLivros.size() : 20); i++) {
 			Livro livroSelecionado = allLivros.get(i);
 			bestSellers.add(livroSelecionado);
 		}

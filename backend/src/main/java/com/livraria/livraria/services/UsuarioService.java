@@ -1,6 +1,8 @@
 package com.livraria.livraria.services;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +11,9 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.livraria.livraria.entities.Pedido;
 import com.livraria.livraria.entities.Usuario;
+import com.livraria.livraria.entities.dtos.UsuarioDTO;
 import com.livraria.livraria.repositories.UsuarioRepository;
 import com.livraria.livraria.services.exceptions.DatabaseException;
 import com.livraria.livraria.services.exceptions.ResourceNotFoundException;
@@ -25,24 +29,44 @@ public class UsuarioService {
 	@Autowired
 	private PasswordEncoder encoder;
 
-	public Usuario findById(Long id) {
-		Optional<Usuario> obj = usuarioRepository.findById(id);
-		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
+	public UsuarioDTO findById(Long id) {
+		try {
+			Optional<Usuario> obj = usuarioRepository.findById(id);
+			UsuarioDTO userDto = new UsuarioDTO(obj.get().getId(), obj.get().getNome(), obj.get().getEmail(), obj.get().getTelefone());
+			return userDto;
+		} catch(NoSuchElementException e) {
+			throw new ResourceNotFoundException(id);
+		}
 	}
 
-	public List<Usuario> findAll() {
+	public List<UsuarioDTO> findAll() {
 		List<Usuario> listUsuario = usuarioRepository.findAll();
-		return listUsuario;
+		List<UsuarioDTO> listUsuarioDTO = new ArrayList<>();
+		for(Usuario user : listUsuario) {
+			UsuarioDTO userDto = new UsuarioDTO(user.getId(), user.getNome(), user.getEmail(), user.getTelefone());
+			listUsuarioDTO.add(userDto);
+		}
+		return listUsuarioDTO;
 	}
 	
 	public Usuario findByEmail(String email) {
 		Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
 		return usuario.orElseThrow(() -> new ResourceNotFoundException(email));
 	}
+	
+	public List<Pedido> findPedidoByUsuario(Long id) {
+		try {
+			Optional<Usuario> usuario = usuarioRepository.findById(id);
+			return usuario.get().getPedidos();
+		} catch(NoSuchElementException e) {
+			throw new ResourceNotFoundException(id);
+		}
+	}
 
-	public Usuario insert(Usuario usuario) {
+	public UsuarioDTO insert(Usuario usuario) {
 		usuario.setSenha(encoder.encode(usuario.getSenha()));
-		return usuarioRepository.save(usuario);
+		usuarioRepository.save(usuario);
+		return new UsuarioDTO(usuario.getId(), usuario.getNome(), usuario.getEmail(), usuario.getTelefone());
 	}
 
 	public void deleteById(Long id) {
@@ -55,11 +79,13 @@ public class UsuarioService {
 		}
 	}
 
-	public Usuario updateUsuario(Long id, Usuario novoUsuario) {
+	public UsuarioDTO updateUsuario(Long id, Usuario novoUsuario) {
 		try {
 			Usuario usuario = usuarioRepository.getReferenceById(id);
 			updateUsuario(usuario, novoUsuario);
-			return usuarioRepository.save(usuario);
+			UsuarioDTO userDto = new UsuarioDTO(usuario.getId(), usuario.getNome(), usuario.getEmail(), usuario.getTelefone());	
+			usuarioRepository.save(usuario);
+			return userDto;
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException(id);
 		}

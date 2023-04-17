@@ -11,18 +11,22 @@
 .button-component,
 .input-component {
   font-family: "Inconsolata", sans-serif;
-  border-radius: 5rem;
+}
+
+.input-component {
+  border: var(--border-config);
+  padding: 1rem;
 }
 
 .button-component {
   cursor: pointer;
+  border-radius: 5rem;
   padding: 1rem;
   background: var(--green);
   color: #000;
   border: var(--border-config);
   font-weight: 900;
   transition: 0.1s;
-  font-size: 1.5rem;
 
   &:hover {
     transform: translate(-3px, -3px);

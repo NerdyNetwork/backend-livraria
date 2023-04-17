@@ -3,15 +3,15 @@
 :root {
   --border-config: 3.5px solid #000;
   --box-shadow-config: 0.188rem 0.188rem 0 #000;
-  --header-size: 4rem;
+  --header-size: 3.944rem;
 
   --white: #eff7cf;
   --green: #bad9b5;
   --green1: #68cf58;
   --black: #3a3a3a;
   --wine: #420c14;
-  --red: #732c2c;
-  --light-red: #904747;
+  --red: #9f2a2a;
+  --light-red: #c25f5f;
   --yellow: #aba361;
 }
 
@@ -28,24 +28,24 @@ body {
   color: #000;
 }
 
-/* width */
+// width
 ::-webkit-scrollbar {
   background: var(--black);
   width: 1rem;
 }
 
-/* Track */
+// Track
 ::-webkit-scrollbar-track {
   border-radius: 10px;
 }
 
-/* Handle */
+// Handle
 ::-webkit-scrollbar-thumb {
   background: var(--light-red);
   border-radius: 10px;
 }
 
-/* Handle on hover */
+// Handle on hover
 ::-webkit-scrollbar-thumb:hover {
   background: var(--red);
 }

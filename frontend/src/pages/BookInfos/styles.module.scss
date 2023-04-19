@@ -1,9 +1,10 @@
 @import "../../sass/components.scss";
+@import "../../sass/variables.scss";
 
 .container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  padding-top: 4rem;
+  padding-top: 3rem;
 }
 
 #book-container {
@@ -12,13 +13,13 @@
 
   img {
     width: 50%;
-    border: var(--border-config);
+    border: $border-config;
     cursor: pointer;
     transition: 0.1s all;
 
     &:hover {
       transform: translate(-0.188rem, -0.188rem);
-      box-shadow: var(--box-shadow-config);
+      box-shadow: $box-shadow-config;
     }
   }
 }
@@ -29,7 +30,7 @@
   .box-shadow-menu {
     background: #fff;
     padding: 1rem;
-    border: var(--border-config);
+    border: $border-config;
   }
 
   h3 {
@@ -56,8 +57,9 @@
       button {
         @extend .button-component;
         font-size: 1.6rem;
-        background: var(--wine);
-        color: var(--white);
+        background: $wine
+;
+        color: $white;
         &:hover {
           transform: none;
           box-shadow: none;
@@ -92,17 +94,18 @@
     button {
       width: 100%;
       padding: 1rem;
-      background-color: var(--yellow);
+      background-color: $yellow;
       color: #000;
-      border: var(--border-config);
+      border: $border-config;
       font-weight: 900;
       transition: 0.1s;
       font-size: 1.5rem;
       cursor: pointer;
 
       &:hover {
-        background-color: var(--wine);
-        color: var(--white);
+        background-color: $wine
+;
+        color: $white;
         transform: translate(-5px, -5px);
         box-shadow: 5px 5px 0 #000;
       }

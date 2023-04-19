@@ -1,16 +1,17 @@
 @import "../../sass/components.scss";
+@import "../../sass/variables.scss";
 
 .container-1 {
   $SCROLL_SIZE: calc(2rem + 2px);
 
-  background: var(--wine);
-  color: var(--white);
+  background: $wine;
+  color: $white;
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
-  height: calc(100vh - var(--header-size) - $SCROLL_SIZE);
+  height: calc(100vh - $SCROLL_SIZE - $header-size);
   padding: 0 5rem;
-  
+
   .subcontainer {
     .title {
       @extend .title-component;
@@ -20,20 +21,20 @@
 
     .search-input {
       margin-top: 2rem;
-      background: var(--white);
+      background: $white;
       display: flex;
       flex-direction: row;
       padding: 1rem;
       border-radius: 1rem 5rem 5rem 1rem;
-      box-shadow: 2px 2px 5px var(--yellow);
+      box-shadow: 2px 2px 5px $yellow;
     
       input, button {
         font-size: 2rem;
       }
     
       input {
-        background: var(--white);
-        color: var(--wine);
+        background: $white;
+        color: $wine;
         font-family: sans-serif;
         padding: 1rem;
         width: 100%;
@@ -45,6 +46,25 @@
       }
     }
   }
+}
+
+.infinite-animation {
+  display: flex;
+  overflow: hidden;
+  border-top: 2px solid $white;
+  background: $red;
+  color: $white;
+  padding: 0.5rem;
+
+  p {
+    white-space: nowrap;
+    animation: scrollLeft 45s infinite linear;
+  }
+}
+  
+@keyframes scrollLeft {
+  from { transform: translateX(0%); }
+  to { transform: translateX(-50%); }
 }
 
 .container-2 {
@@ -69,8 +89,8 @@
 
     img {
       width: 100%;
-      border: var(--border-config);
-      box-shadow: var(--box-shadow-config);
+      border: $border-config;
+      box-shadow: $box-shadow-config;
       cursor: pointer;
       transition: .1s all;
 
@@ -80,23 +100,4 @@
       }
     }
   }
-}
-
-.infinite-animation {
-  display: flex;
-  overflow: hidden;
-  border-top: 2px solid var(--white);
-  background: var(--red);
-  color: var(--white);
-  padding: 0.5rem;
-
-  p {
-    white-space: nowrap;
-    animation: scrollLeft 45s infinite linear;
-  }
-}
-  
-@keyframes scrollLeft {
-  from { transform: translateX(0%); }
-  to { transform: translateX(-50%); }
 }

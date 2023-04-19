@@ -1,3 +1,5 @@
+@import "./variables.scss";
+
 @font-face {
   font-family: "Title Font";
   src: url("../assets/3d07f5abf272fbb5670d02ed687453d0.woff2") format("woff2");
@@ -14,7 +16,7 @@
 }
 
 .input-component {
-  border: var(--border-config);
+  border: $border-config;
   padding: 1rem;
 }
 
@@ -22,14 +24,14 @@
   cursor: pointer;
   border-radius: 5rem;
   padding: 1rem;
-  background: var(--green);
+  background: $green;
   color: #000;
-  border: var(--border-config);
+  border: $border-config;
   font-weight: 900;
   transition: 0.1s;
 
   &:hover {
     transform: translate(-3px, -3px);
-    box-shadow: var(--box-shadow-config);
+    box-shadow: $box-shadow-config;
   }
 }

@@ -1,3 +1,5 @@
+@import "../../sass/variables.scss";
+
 .container {
   display: flex;
   flex-direction: column;
@@ -6,7 +8,7 @@
   cursor: pointer;
 
   .line {
-    background: var(--white);
+    background: $white;
     width: 1.5rem;
     height: 0.15rem;
   }  

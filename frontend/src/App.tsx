@@ -7,7 +7,7 @@ export const App = () => {
   return (
     <BrowserRouter>
       <Header />
-      <div style={{marginTop: "var(--header-size)"}}></div>
+      <div className="header-margin"></div>
       <Routes />
     </BrowserRouter>
   );

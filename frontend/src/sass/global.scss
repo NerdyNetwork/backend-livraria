@@ -1,19 +1,5 @@
 @import "./components.scss";
-
-:root {
-  --border-config: 3.5px solid #000;
-  --box-shadow-config: 0.188rem 0.188rem 0 #000;
-  --header-size: 3.944rem;
-
-  --white: #eff7cf;
-  --green: #bad9b5;
-  --green1: #68cf58;
-  --black: #3a3a3a;
-  --wine: #420c14;
-  --red: #9f2a2a;
-  --light-red: #c25f5f;
-  --yellow: #aba361;
-}
+@import "./variables.scss";
 
 * {
   margin: 0;
@@ -21,8 +7,12 @@
   box-sizing: border-box;
 }
 
+.header-margin {
+  margin-top: $header-size;
+}
+
 body {
-  background: var(--white);
+  background: $white;
   font-family: sans-serif;
   font-weight: 700;
   color: #000;
@@ -30,7 +20,7 @@ body {
 
 // width
 ::-webkit-scrollbar {
-  background: var(--black);
+  background: $black;
   width: 1rem;
 }
 
@@ -41,11 +31,11 @@ body {
 
 // Handle
 ::-webkit-scrollbar-thumb {
-  background: var(--light-red);
+  background: $light-red;
   border-radius: 10px;
 }
 
 // Handle on hover
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--red);
+  background: $red;
 }

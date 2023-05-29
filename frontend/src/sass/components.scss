@@ -35,3 +35,13 @@
     box-shadow: $box-shadow-config;
   }
 }
+
+.div-horizontal {
+  display: flex;
+  
+}
+
+.div-vertical {
+  display: flex;
+  flex-direction: column;
+}

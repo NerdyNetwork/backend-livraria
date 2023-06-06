@@ -40,7 +40,7 @@ export const BookInfos = () => {
         </div>
         <div id={styles["menu-sale"]}>
           <div className={styles["box-shadow-menu"]}>
-            <h3>Mindset</h3>
+            <h3 className="title-component">Mindset</h3>
             <p>Objetiva</p>
             <hr />
             <div id={styles["price-amount"]}>
@@ -83,7 +83,7 @@ export const BookInfos = () => {
       </div>
 
       <section id={styles.description}>
-        <h1>Descrição</h1>
+        <h1 className="title-component">Descrição</h1>
         <p>
           Carol S. Dweck, professora de psicologia na Universidade Stanford e
           especialista internacional em sucesso e motivação, desenvolveu, ao
@@ -100,7 +100,7 @@ export const BookInfos = () => {
       </section>
 
       <section id={styles.specification}>
-        <h1>Especificação</h1>
+        <h1 className="title-component">Especificação</h1>
 
         <div className={styles.subsection}>
           <div>

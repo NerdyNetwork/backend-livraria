@@ -1,0 +1,31 @@
+@import "../../sass/components.scss";
+@import "../../sass/variables.scss";
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - $header-size);
+}
+
+.subcontainer {
+  display: flex;
+  flex-direction: column;
+  width: $width;
+  max-width: $max-width;
+  background: #fff;
+  border: $border-config;
+  padding: 3rem;
+}
+
+input {
+  @extend .input-component;
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+}
+
+button {
+  @extend .button-component;
+  font-size: 1.6rem;
+  margin-top: .5rem;
+}

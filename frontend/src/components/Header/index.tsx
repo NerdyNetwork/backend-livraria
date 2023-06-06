@@ -1,8 +1,10 @@
 import styles from "./styles.module.scss";
 import { MenuIcon } from "../MenuIcon";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Header = () => {
+  const navigate = useNavigate();
+
   return (
     <div className={styles.container}>
       <div>
@@ -13,9 +15,10 @@ export const Header = () => {
         <span className={styles["menu-label"]}>Busque por categoria</span>
       </div>
       <div>
-        <p>Meus Pedidos</p>
-        <p>Entrar</p>
-        <p>Minha cesta</p>
+        <b>Meus Pedidos</b>
+        <b onClick={() => navigate("/login")}>Entrar</b>
+        <b onClick={() => navigate("/register")}>Cadastrar</b>
+        <b>Minha cesta</b>
       </div>
     </div>
   );

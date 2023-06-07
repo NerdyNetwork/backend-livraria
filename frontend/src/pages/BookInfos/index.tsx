@@ -44,11 +44,11 @@ export const BookInfos = () => {
         id: "1",
         name: "Mindset",
         img: bookImage,
-        amount: 1,
+        amount,
         price: 35.9,
       });
     } else {
-      currentCart[bookIndexOnCart].amount++;
+      currentCart[bookIndexOnCart].amount += amount;
     }
     localStorage.setItem("cart", JSON.stringify(currentCart));
   };

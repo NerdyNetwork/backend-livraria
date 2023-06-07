@@ -28,7 +28,7 @@ export const Header = () => {
       {
         isModalOpen &&
         <Modal onClose={() => setIsModalOpen(false)}>
-
+          
         </Modal>
       }
     </div>

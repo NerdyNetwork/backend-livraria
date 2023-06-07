@@ -1,35 +1,56 @@
 import { useState } from "react";
 import styles from "./styles.module.scss";
 import bookImage from "../../assets/bookimage.jpeg";
+import { Cart } from "../../types/Cart";
 
 export const BookInfos = () => {
   const [amount, setAmount] = useState(1);
 
-  const specifications = {
-    keys: [
-    "Ano da Edição",
-    "Autor",
-    "Editora",
-    "Idioma",
-    "Número de Páginas",
-    "Acabamento",
-    "Título Original",
-    "Tradutor",
-    "ISBN",
-    "Subtitulo",
-    ],
-    values: [
-      "2017",
-      "Dweck, Carol S.",
-      "Editora Schwarcz SA",
-      "Português",
-      "312",
-      "Livro brochura (paperback)",
-      "Mindset",
-      "Duarte. S.",
-      "978-85-470-0024-0",
-      "A nova psicologia do sucesso",
-    ]
+  const data = {
+    id: "1",
+    specifications: {
+      keys: [
+        "Ano da Edição",
+        "Autor",
+        "Editora",
+        "Idioma",
+        "Número de Páginas",
+        "Acabamento",
+        "Título Original",
+        "Tradutor",
+        "ISBN",
+        "Subtitulo",
+      ],
+      values: [
+        "2017",
+        "Dweck, Carol S.",
+        "Editora Schwarcz SA",
+        "Português",
+        "312",
+        "Livro brochura (paperback)",
+        "Mindset",
+        "Duarte. S.",
+        "978-85-470-0024-0",
+        "A nova psicologia do sucesso",
+      ],
+    },
+  };
+
+  const handleAddToCart = () => {
+    let currentCart: Cart[] = JSON.parse(localStorage.getItem("cart") ?? "[]");
+    let bookIndexOnCart = currentCart.findIndex((v) => v.id === data.id);
+    if (bookIndexOnCart == -1) {
+      currentCart.push({
+        id: "1",
+        name: "Mindset",
+        img: bookImage,
+        amount: 1,
+        price: 35.9,
+      });
+    } else {
+      currentCart[bookIndexOnCart].amount++;
+    }
+    localStorage.setItem("cart", JSON.stringify(currentCart));
   };
 
   return (
@@ -66,7 +87,7 @@ export const BookInfos = () => {
               </div>
             </div>
             <div className={styles["buttons-container"]}>
-              <button>Adicionar ao carrinho</button>
+              <button onClick={() => handleAddToCart()}>Adicionar ao carrinho</button>
               <button>Comprar</button>
             </div>
             <div id={styles["cep-info"]}>
@@ -104,14 +125,14 @@ export const BookInfos = () => {
 
         <div className={styles.subsection}>
           <div>
-            {specifications.keys.map((key => (
-              <b>{key}</b>
-            )))}
+            {data.specifications.keys.map((key, i) => (
+              <b key={i}>{key}</b>
+            ))}
           </div>
           <div>
-            {specifications.values.map((value => (
-              <span>{value}</span>
-            )))}
+            {data.specifications.values.map((value, i) => (
+              <span key={i}>{value}</span>
+            ))}
           </div>
         </div>
       </section>

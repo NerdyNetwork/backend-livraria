@@ -24,17 +24,17 @@
     margin-left: 1rem;
   }
 
-  div {
+  .left-menu {
     display: flex;
     align-items: center;
 
     b {
       cursor: pointer;
     }
-    
-    &:last-child {
-      gap: 1.5rem;
-      color: $white;
-    }
+  }
+
+  .right-menu {
+    gap: 1.5rem;
+    color: $white;
   }
 }

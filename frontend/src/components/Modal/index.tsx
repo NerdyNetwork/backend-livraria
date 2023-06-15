@@ -14,12 +14,14 @@ export const Modal: React.FC<ModalProps> = ({ onClose, children }) => {
   return (
     <div className={styles["modal"]}>
       <div className={styles["modal-content"]}>
-        <div className={styles["header"]}>
+        <div className={styles["modal-content-column"]}>
+          {children}
+        </div>
+        <div className={styles["header-content"]}>
           <button className={styles["close-button"]} onClick={closeModal}>
             X
           </button>
         </div>
-        {children}
       </div>
     </div>
   );

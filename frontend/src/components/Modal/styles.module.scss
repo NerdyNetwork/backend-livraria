@@ -14,21 +14,36 @@
   z-index: 999;
 
   .modal-content {
+    display: flex;
+    align-items: start;
     background-color: #fff;
     border: $border-config;
     padding: 1rem;
     max-width: $max-width;
+    max-height: 30rem;
+    overflow: scroll;
+    overflow-x: hidden;
     width: $width;
-
-    .header {
+    
+    &-column {
       display: flex;
-      justify-content: end;
+      flex-direction: column;
+      align-items: center;
       width: 100%;
+      border-right: $border-config;
+      margin-right: 1rem;
+
+      * {
+        color: #000;
+      }
     }
 
-    .close-button {
-      @extend .title-component;
-      background: $red;
+    .header-content {
+      .close-button {
+        @extend .title-component;
+        font-size: 1rem;
+        background: $red-variant;
+      }
     }
   }
 }

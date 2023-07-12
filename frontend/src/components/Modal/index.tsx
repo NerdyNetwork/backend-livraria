@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import { ReactNode } from 'react';
+
 import styles from './styles.module.scss';
 
-interface ModalProps {
+type ModalProps = {
   onClose: () => void;
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
-export const Modal: React.FC<ModalProps> = ({ onClose, children }) => {
+export const Modal = ({ onClose, children }: ModalProps) => {
   const closeModal = () => {
     onClose();
   };
@@ -17,6 +18,7 @@ export const Modal: React.FC<ModalProps> = ({ onClose, children }) => {
         <div className={styles["modal-content-column"]}>
           {children}
         </div>
+        
         <div className={styles["header-content"]}>
           <button className={styles["close-button"]} onClick={closeModal}>
             X

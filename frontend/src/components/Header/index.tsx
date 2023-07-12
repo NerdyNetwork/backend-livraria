@@ -1,13 +1,12 @@
-import { useState } from "react";
-import styles from "./styles.module.scss";
 import { MenuIcon } from "../MenuIcon";
-import { Link, useNavigate } from "react-router-dom";
 import { Modal } from "../Modal";
+import { Link } from "react-router-dom";
+import { useHeader } from './useHeader';
+
+import styles from "./styles.module.scss";
 
 export const Header = () => {
-  const navigate = useNavigate();
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const {navigate, setIsModalOpen, isModalOpen} = useHeader();
 
   return (
     <div className={styles.container}>
@@ -25,80 +24,79 @@ export const Header = () => {
         <b onClick={() => setIsModalOpen(true)}>Minha cesta</b>
       </div>
 
-      {
-        isModalOpen &&
-        <Modal onClose={() => setIsModalOpen(false)}>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-          <div>Teste</div>
-        </Modal>
+      { isModalOpen &&
+          <Modal onClose={() => setIsModalOpen(false)}>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+            <div>Teste</div>
+          </Modal>
       }
     </div>
   );

@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
@@ -20,7 +18,6 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_usuario")
-@CrossOrigin("*")
 public class Usuario implements Serializable{
 
 	private static final long serialVersionUID = 1L;

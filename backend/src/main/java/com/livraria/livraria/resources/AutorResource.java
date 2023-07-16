@@ -23,7 +23,7 @@ import com.livraria.livraria.services.exceptions.DatabaseException;
 import com.livraria.livraria.services.exceptions.ResourceNotFoundException;
 
 @RestController
-@RequestMapping(value = "/autor")
+@RequestMapping(value = "/autores")
 @CrossOrigin(origins = "*")
 public class AutorResource {
 	

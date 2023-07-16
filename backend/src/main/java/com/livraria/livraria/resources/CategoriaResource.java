@@ -23,7 +23,7 @@ import com.livraria.livraria.services.exceptions.DatabaseException;
 import com.livraria.livraria.services.exceptions.ResourceNotFoundException;
 
 @RestController
-@RequestMapping(value = "/categoria")
+@RequestMapping(value = "/categorias")
 @CrossOrigin(origins = "*")
 public class CategoriaResource {
 

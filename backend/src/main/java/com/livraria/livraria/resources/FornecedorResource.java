@@ -21,7 +21,7 @@ import com.livraria.livraria.services.FornecedorService;
 import com.livraria.livraria.services.exceptions.ResourceNotFoundException;
 
 @RestController
-@RequestMapping(value = "/fornecedor")
+@RequestMapping(value = "/fornecedores")
 @CrossOrigin(origins = "*")
 public class FornecedorResource {
 

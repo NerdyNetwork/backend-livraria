@@ -22,7 +22,7 @@ import com.livraria.livraria.services.LivroService;
 import com.livraria.livraria.services.exceptions.ResourceNotFoundException;
 
 @RestController
-@RequestMapping(value = "/livro")
+@RequestMapping(value = "/livros")
 @CrossOrigin(origins = "*")
 public class LivroResource {
 	

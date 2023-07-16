@@ -27,7 +27,7 @@ import com.livraria.livraria.services.UsuarioService;
 import com.livraria.livraria.services.exceptions.ResourceNotFoundException;
 
 @RestController
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/usuarios")
 @CrossOrigin(origins = "*")
 public class UsuarioResource {
 	

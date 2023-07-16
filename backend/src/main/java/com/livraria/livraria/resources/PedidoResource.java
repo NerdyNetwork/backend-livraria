@@ -25,7 +25,7 @@ import com.livraria.livraria.services.exceptions.DatabaseException;
 import com.livraria.livraria.services.exceptions.ResourceNotFoundException;
 
 @RestController
-@RequestMapping(value = "/pedido")
+@RequestMapping(value = "/pedidos")
 @CrossOrigin(origins = "*")
 public class PedidoResource {
 	

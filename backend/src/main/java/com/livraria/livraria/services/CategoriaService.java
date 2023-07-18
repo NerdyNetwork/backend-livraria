@@ -32,18 +32,21 @@ public class CategoriaService {
 	}
 	
 	public Categoria findByNome(String nome) {
-		List<Categoria> categorias = categoriaRepository.findAll();
-		for(Categoria categoria : categorias) {
-			if(categoria.getNome().equals(nome)) {
-				return categoria;
-			}
+		try {
+			Categoria categoria = categoriaRepository.findByNome(nome);
+			return categoria;
+		} catch (IllegalArgumentException err) {
+			throw new ResourceNotFoundException(nome);
 		}
-		throw new DatabaseException("Categoria não encontrada!");
 	}
 	
 	public Categoria insert(Categoria categoria) {
-		categoria = categoriaRepository.save(categoria);
-		return categoria;
+		try {
+			categoria = categoriaRepository.save(categoria);
+			return categoria;
+		} catch (IllegalArgumentException err) {
+			throw new DatabaseException("Erro no banco de dados");
+		}
 	}
 	
 	public void deleteById(Long id) {
@@ -63,6 +66,8 @@ public class CategoriaService {
 			return categoriaRepository.save(categoria);
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException(id);
+		} catch (IllegalArgumentException err) {
+			throw new DatabaseException("Erro no banco");
 		}
 	}
 	

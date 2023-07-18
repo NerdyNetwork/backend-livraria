@@ -7,5 +7,5 @@ import com.livraria.livraria.entities.Categoria;
 
 @Repository
 public interface CategoriaRepository extends JpaRepository<Categoria, Long>{
-
+    public Categoria findByNome(String nome);
 }

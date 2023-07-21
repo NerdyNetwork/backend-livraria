@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.livraria.livraria.entities.Fornecedor;
 import com.livraria.livraria.services.FornecedorService;
+import com.livraria.livraria.services.exceptions.DatabaseException;
 import com.livraria.livraria.services.exceptions.ResourceNotFoundException;
 
 @RestController
@@ -40,29 +42,46 @@ public class FornecedorResource {
 	
 	@GetMapping
 	public ResponseEntity<List<Fornecedor>> findAll() {
-		List<Fornecedor> listFornecedor = fornecedorService.findAll();
-		if(listFornecedor.size() != 0) {
-			return ResponseEntity.ok().body(listFornecedor);
+		try {
+			List<Fornecedor> listFornecedor = fornecedorService.findAll();
+			return ResponseEntity.status(HttpStatus.OK).body(listFornecedor);
+		} catch (DatabaseException err) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
-		return ResponseEntity.noContent().build();
 	}
 	
 	@PostMapping
 	public ResponseEntity<Fornecedor> insert(@RequestBody Fornecedor fornecedor) {
-		fornecedor = fornecedorService.insert(fornecedor);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(fornecedor.getId()).toUri();
-		return ResponseEntity.created(uri).body(fornecedor);
+		try {
+			fornecedor = fornecedorService.insert(fornecedor);
+			URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(fornecedor.getId()).toUri();
+			return ResponseEntity.created(uri).body(fornecedor);
+		} catch (DatabaseException err) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+		}
 	}
 	
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> deleteById(@PathVariable Long id) {
-		fornecedorService.deleteById(id);
-		return ResponseEntity.noContent().build();
+		try {
+			fornecedorService.deleteById(id);
+			return ResponseEntity.noContent().build();
+		} catch (DatabaseException err) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+		} catch (ResourceNotFoundException err) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
 	}
 	
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<Fornecedor> updateFornecedor(@PathVariable Long id, @RequestBody Fornecedor fornecedor) {
-		Fornecedor fornecedorUpdate = fornecedorService.updateFornecedor(id, fornecedor);
-		return ResponseEntity.ok().body(fornecedorUpdate);
+		try {
+			Fornecedor fornecedorUpdate = fornecedorService.updateFornecedor(id, fornecedor);
+			return ResponseEntity.ok().body(fornecedorUpdate);
+		} catch (DatabaseException err) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+		} catch (ResourceNotFoundException err) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
 	}
 }

@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 
 import com.livraria.livraria.entities.Fornecedor;
@@ -27,12 +28,20 @@ public class FornecedorService {
 	}
 	
 	public List<Fornecedor> findAll() {
-		List<Fornecedor> listFornecedor = fornecedorRepository.findAll();
-		return listFornecedor;
+		try {
+			List<Fornecedor> listFornecedor = fornecedorRepository.findAll();
+			return listFornecedor;
+		} catch (Exception err) {
+			throw new DatabaseException("Erro no banco de dados");
+		}
 	}
 	
 	public Fornecedor insert(Fornecedor fornecedor) {
-		return fornecedorRepository.save(fornecedor);
+		try {
+			return fornecedorRepository.save(fornecedor);
+		} catch (IllegalArgumentException | OptimisticLockingFailureException err) {
+			throw new DatabaseException("Erro no banco de dados");
+		}
 	}
 	
 	public void deleteById(Long id) {
@@ -52,6 +61,8 @@ public class FornecedorService {
 			return fornecedorRepository.save(fornecedor);
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException(id);
+		} catch (IllegalArgumentException err) {
+			throw new DatabaseException("Erro no banco de dados");
 		}
 	}
 	

@@ -31,16 +31,22 @@ public class LivroService {
 	}
 	
 	public List<Livro> findAll() {
-		List<Livro> livros = livroRepository.findAll();
-		return livros;
+		try {
+			List<Livro> livros = livroRepository.findAll();
+			return livros;
+		} catch (Exception err) {
+			throw new DatabaseException("Erro no banco de dados");
+		}
 	}
 	
-	public Set<Livro> bestSellers() {
-		List<Livro> allLivros = livroRepository.findAll();
+	public Set<Livro> bestSellers() throws DatabaseException{
+		List<Livro> allLivros = findAll();
 		Set<Livro> bestSellers = new LinkedHashSet<>();
 		
+		// Ordena pelo atributo quantidade de compras
 		allLivros.sort(Comparator.comparing(Livro::getQuantidadeCompras).reversed());
 		
+		// Verifica se existe mais do que 20 livros, caso sim puxa os 20 mais vendidos, caso não puxa a quantidade que tem
 		for(int i = 0; i < ((allLivros.size() < 20) ? allLivros.size() : 20); i++) {
 			Livro livroSelecionado = allLivros.get(i);
 			bestSellers.add(livroSelecionado);
@@ -50,7 +56,11 @@ public class LivroService {
 	}
 	
 	public Livro insert(Livro livro) {
-		return livroRepository.save(livro);
+		try {
+			return livroRepository.save(livro);
+		} catch (IllegalArgumentException err) {
+			throw new DatabaseException("Erro no banco de dados");
+		}
 	}
 	
 	public void deleteById(Long id) {
@@ -80,6 +90,8 @@ public class LivroService {
 			return livroRepository.save(livro);
 		}catch(EntityNotFoundException e) {
 			throw new ResourceNotFoundException(id);
+		} catch (IllegalArgumentException err) {
+			throw new DatabaseException("Erro no banco de dados");
 		}
 	}
 	

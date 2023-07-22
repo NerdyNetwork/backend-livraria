@@ -5,8 +5,6 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
@@ -18,7 +16,6 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_categoria")
-@CrossOrigin("*")
 public class Categoria implements Serializable {
 
 	private static final long serialVersionUID = 1L;

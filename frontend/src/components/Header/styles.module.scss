@@ -1,26 +1,40 @@
+@import "../../sass/components.scss";
+@import "../../sass/variables.scss";
+
 .container {
   position: fixed;
   display: flex;
+  top: 0;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  background: var(--wine);
+  background: $wine;
   padding: 1rem 5rem;
   z-index: 1;
 
-  div {
+  .title {
+    @extend .title-component;
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: $white;
+  }
+
+  span {
+    color: $white;
+    margin-left: 1rem;
+  }
+
+  .menu {
     display: flex;
     align-items: center;
 
-    &:last-child {
-      gap: 1.5rem;
-      color: var(--white);
+    b {
+      cursor: pointer;
     }
     
-    span {
-      color: var(--white);
-      margin-left: 1rem;
+    &.right {
+      gap: 1.5rem;
+      color: $white;
     }
   }
-
 }

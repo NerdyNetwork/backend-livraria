@@ -1,102 +1,99 @@
-package com.livraria.livraria.services;
+package com.livraria.livraria.resources;
 
-import java.util.Comparator;
-import java.util.LinkedHashSet;
+import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.stereotype.Service;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.livraria.livraria.entities.Categoria;
 import com.livraria.livraria.entities.Livro;
-import com.livraria.livraria.repositories.LivroRepository;
+import com.livraria.livraria.services.LivroService;
 import com.livraria.livraria.services.exceptions.DatabaseException;
 import com.livraria.livraria.services.exceptions.ResourceNotFoundException;
 
-import jakarta.persistence.EntityNotFoundException;
-
-@Service
-public class LivroService {
+@RestController
+@RequestMapping(value = "/livros")
+@CrossOrigin(origins = "*")
+public class LivroResource {
 	
 	@Autowired
-	private LivroRepository livroRepository;
+	private LivroService livroService;
 	
-	public Livro findById(Long id) {
-		Optional<Livro> livro = livroRepository.findById(id);
-		return livro.orElseThrow(() -> new ResourceNotFoundException(id));
-	}
-	
-	public List<Livro> findAll() {
-		List<Livro> livros = livroRepository.findAll();
-		return livros;
-	}
-	
-	public Set<Livro> bestSellers() {
-		List<Livro> allLivros = livroRepository.findAll();
-		Set<Livro> bestSellers = new LinkedHashSet<>();
-		
-		allLivros.sort(Comparator.comparing(Livro::getQuantidadeCompras).reversed());
-		
-		for(int i = 0; i < ((allLivros.size() < 20) ? allLivros.size() : 20); i++) {
-			Livro livroSelecionado = allLivros.get(i);
-			bestSellers.add(livroSelecionado);
-		}
-		
-		return bestSellers;
-	}
-	
-	public Livro insert(Livro livro) {
-		return livroRepository.save(livro);
-	}
-	
-	public void deleteById(Long id) {
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<Livro> findById(@PathVariable Long id) {
 		try {
-			livroRepository.deleteById(id);
-		} catch (EmptyResultDataAccessException e) {
-			throw new ResourceNotFoundException(id);
-		} catch (DataIntegrityViolationException e) {
-			throw new DatabaseException(e.getMessage());
+			Livro livro = livroService.findById(id);
+			return ResponseEntity.ok().body(livro);
+		} catch(ResourceNotFoundException e) {
+			System.out.println("[Erro no FindById: ]" + e.getMessage());
+			return ResponseEntity.notFound().build();
 		}
 	}
 	
-	public Livro updateLivro(Long id, Livro novoLivro) {
+	@GetMapping(value = "/bestsellers")
+	public ResponseEntity<Set<Livro>> bestSellersLivros() {
 		try {
-			Livro livro = livroRepository.getReferenceById(id);
-			updateLivro(livro, novoLivro);
-			return livroRepository.save(livro);
-		} catch (EntityNotFoundException e) {
-			throw new ResourceNotFoundException(id);
+			Set<Livro> bestSellers = livroService.bestSellers();
+			return ResponseEntity.ok().body(bestSellers);
+		} catch (DatabaseException err) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 	}
 	
-	public Livro updateQuantiVendasLivro(Long id) {
+	@GetMapping
+	public ResponseEntity<List<Livro>> findAll() {
 		try {
-			Livro livro = livroRepository.getReferenceById(id);
-			livro.atualizarQuantidadeCompras();
-			return livroRepository.save(livro);
-		}catch(EntityNotFoundException e) {
-			throw new ResourceNotFoundException(id);
+			List<Livro> livros = livroService.findAll();
+			return ResponseEntity.ok().body(livros);
+		} catch (DatabaseException err) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 	}
 	
-	private void updateLivro(Livro livro, Livro novoLivro) {
-		livro.setNome(novoLivro.getNome());
-		livro.setDescricao(novoLivro.getDescricao());
-		livro.setEditora(novoLivro.getEditora());
-		livro.setIsbn(novoLivro.getIsbn());
-		livro.setCodigoDeBarras(novoLivro.getCodigoDeBarras());
-		livro.setAutor(novoLivro.getAutor());
-		livro.setFornecedor(novoLivro.getFornecedor());
-		livro.setQuantidadeCompras(novoLivro.getQuantidadeCompras());
-		if(novoLivro.getCategorias().size() != 0) {
-			livro.getCategorias().clear();
-			for(Categoria categoria : novoLivro.getCategorias()) {
-				livro.getCategorias().add(categoria);
-			}
+	@PostMapping
+	public ResponseEntity<Livro> insert(@RequestBody Livro livro) {
+		try {
+			livro = livroService.insert(livro);
+			URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(livro.getId()).toUri();
+			return ResponseEntity.created(uri).body(livro);
+		} catch (DatabaseException err) {
+			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+		}
+	}
+	
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+		try {
+			livroService.deleteById(id);
+			return ResponseEntity.noContent().build();
+		} catch (ResourceNotFoundException err) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		} catch (DatabaseException err) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+		}
+	}
+	
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<Livro> updateLivro(@PathVariable Long id, @RequestBody Livro novoLivro) {
+		try {
+			novoLivro = livroService.updateLivro(id, novoLivro);
+			return ResponseEntity.ok().body(novoLivro);
+		} catch (ResourceNotFoundException err) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		} catch (DatabaseException err) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 	}
 }

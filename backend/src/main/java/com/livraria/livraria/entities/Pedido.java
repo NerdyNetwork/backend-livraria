@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.livraria.livraria.entities.enums.StatusDoPedido;
@@ -24,7 +22,6 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_pedido")
-@CrossOrigin("*")
 public class Pedido implements Serializable{
 
 	private static final long serialVersionUID = 1L;

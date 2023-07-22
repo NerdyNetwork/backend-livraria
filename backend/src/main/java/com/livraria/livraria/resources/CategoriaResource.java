@@ -4,7 +4,9 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,7 +24,8 @@ import com.livraria.livraria.services.exceptions.DatabaseException;
 import com.livraria.livraria.services.exceptions.ResourceNotFoundException;
 
 @RestController
-@RequestMapping(value = "/categoria")
+@RequestMapping(value = "/categorias")
+@CrossOrigin(origins = "*")
 public class CategoriaResource {
 
 	@Autowired
@@ -34,7 +37,7 @@ public class CategoriaResource {
 			Categoria categoria = categoriaService.findById(id);
 			return ResponseEntity.ok().body(categoria);
 		} catch(ResourceNotFoundException e) {
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 	}
 	
@@ -44,32 +47,48 @@ public class CategoriaResource {
 		return ResponseEntity.ok().body(categorias);
 	}
 	
-	@GetMapping(value = "/categorias")
-	public ResponseEntity<Categoria> findByNome(@RequestParam String nome) {
+	@GetMapping(value = "/categoriasByName")
+	public ResponseEntity<Categoria> findByNome(@RequestParam(name = "nome") String nome) {
 		try {
 			Categoria categoria = categoriaService.findByNome(nome);
 			return ResponseEntity.ok().body(categoria);
-		} catch(DatabaseException e) {
-			return ResponseEntity.notFound().build();
+		} catch(ResourceNotFoundException err) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 	}
 	
 	@PostMapping
 	public ResponseEntity<Categoria> insert(@RequestBody Categoria categoria) {
-		categoria = categoriaService.insert(categoria);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(categoria.getId()).toUri();
-		return ResponseEntity.created(uri).body(categoria);
+		try {
+			categoria = categoriaService.insert(categoria);
+			URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(categoria.getId()).toUri();
+			return ResponseEntity.created(uri).body(categoria);
+		} catch (DatabaseException err) {
+			return  ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+		}
 	}
 	
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> deleteById(@PathVariable Long id) {
-		categoriaService.deleteById(id);
-		return ResponseEntity.noContent().build();
+		try {
+			categoriaService.deleteById(id);
+			return ResponseEntity.noContent().build();
+		} catch(DatabaseException err) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+		} catch (ResourceNotFoundException err) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
 	}
 	
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<Categoria> updareCategoria(@PathVariable Long id, @RequestBody Categoria novaCategoria) {
-		Categoria categoria = categoriaService.updateCategoria(id, novaCategoria);
-		return ResponseEntity.ok().body(categoria);
+		try {
+			Categoria categoria = categoriaService.updateCategoria(id, novaCategoria);
+			return ResponseEntity.ok().body(categoria);
+		} catch (ResourceNotFoundException err) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		} catch (DatabaseException err) {
+			return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+		}
 	}
 }

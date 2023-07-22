@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.livraria.livraria.entities.enums.TipoLivro;
 
@@ -24,7 +22,6 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_livro")
-@CrossOrigin("*")
 public class Livro implements Serializable{
 
 	private static final long serialVersionUID = 1L;

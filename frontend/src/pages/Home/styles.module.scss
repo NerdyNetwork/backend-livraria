@@ -1,37 +1,40 @@
 @import "../../sass/components.scss";
+@import "../../sass/variables.scss";
 
 .container-1 {
-  background: var(--wine);
-  color: var(--white);
+  $SCROLL_SIZE: calc(2rem + 2px);
+
+  background: $wine;
+  color: $white;
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
-  min-height: calc(100vh - 2rem);
-  padding: 0rem 5rem;
+  height: calc(100vh - $SCROLL_SIZE - $header-size);
+  padding: 0 5rem;
 
   .subcontainer {
     .title {
-      @extend .title;
+      @extend .title-component;
       font-size: 3.5rem;
       margin-bottom: 2rem;
     }
 
     .search-input {
       margin-top: 2rem;
-      background: var(--white);
+      background: $white;
       display: flex;
       flex-direction: row;
       padding: 1rem;
       border-radius: 1rem 5rem 5rem 1rem;
-      box-shadow: 2px 2px 5px var(--yellow);
+      box-shadow: 2px 2px 5px $yellow;
     
       input, button {
         font-size: 2rem;
       }
     
       input {
-        background: var(--white);
-        color: var(--wine);
+        background: $white;
+        color: $wine;
         font-family: sans-serif;
         padding: 1rem;
         width: 100%;
@@ -39,34 +42,8 @@
       }
     
       button {
-        @extend .button;
+        @extend .button-component;
       }
-    }
-  }
-}
-
-.container-2 {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 5rem;
-
-  .title {
-    @extend .title;
-    font-size: 3rem;
-  }
-  
-  .subcontainer {
-    display: flex;
-    justify-content: center;
-    margin-top: 4rem;
-    gap: 1rem;
-
-    img {
-      width: 10%;
-      border: var(--border-config);
-      box-shadow: var(--box-shadow-config);
     }
   }
 }
@@ -74,9 +51,9 @@
 .infinite-animation {
   display: flex;
   overflow: hidden;
-  border-top: 2px solid var(--white);
-  background: var(--red);
-  color: var(--white);
+  border-top: 2px solid $white;
+  background: $red;
+  color: $white;
   padding: 0.5rem;
 
   p {
@@ -88,4 +65,39 @@
 @keyframes scrollLeft {
   from { transform: translateX(0%); }
   to { transform: translateX(-50%); }
+}
+
+.container-2 {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5rem;
+
+  .title {
+    @extend .title-component;
+    font-size: 3rem;
+  }
+  
+  .subcontainer {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    width: 80%;
+    justify-content: center;
+    margin-top: 4rem;
+    gap: 1rem;
+
+    img {
+      width: 100%;
+      border: $border-config;
+      box-shadow: $box-shadow-config;
+      cursor: pointer;
+      transition: .1s all;
+
+      &:hover {
+        transform: translate(-.1rem, -.1rem);
+        box-shadow: 0.288rem 0.288rem;
+      }
+    }
+  }
 }

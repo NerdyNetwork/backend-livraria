@@ -26,11 +26,18 @@ public class AutorService {
 	
 	public List<Autor> findAll() {
 		List<Autor> autores = autorRepository.findAll();
+		if(autores.size() == 0) {
+			throw new DatabaseException("Nenhum autor cadastrado");
+		}
 		return autores;
 	}
 	
 	public Autor insert(Autor autor) {
-		return autorRepository.save(autor);
+		try {
+			return autorRepository.save(autor);
+		} catch (IllegalArgumentException err) {
+			throw new DatabaseException("Erro ao inserir Autor");
+		}
 	}
 	
 	public void deleteById(Long id) {
@@ -50,6 +57,8 @@ public class AutorService {
 			return autorRepository.save(autor);
 		} catch (EmptyResultDataAccessException e) {
 			throw new ResourceNotFoundException(id);
+		} catch (IllegalArgumentException err) {
+			throw new DatabaseException("Erro no banco de dados");
 		}
 	}
 	

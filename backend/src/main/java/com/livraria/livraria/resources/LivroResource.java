@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -39,6 +40,16 @@ public class LivroResource {
 		} catch(ResourceNotFoundException e) {
 			System.out.println("[Erro no FindById: ]" + e.getMessage());
 			return ResponseEntity.notFound().build();
+		}
+	}
+
+	@GetMapping(value = "/findByName")
+	public ResponseEntity<Livro> findByName(@RequestParam(value = "nome") String name) {
+		try {
+			Livro livro = livroService.findByName(name);
+			return ResponseEntity.status(HttpStatus.OK).body(livro);
+		} catch (ResourceNotFoundException err) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 	}
 	

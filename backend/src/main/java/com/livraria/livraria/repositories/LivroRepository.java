@@ -7,5 +7,5 @@ import com.livraria.livraria.entities.Livro;
 
 @Repository
 public interface LivroRepository extends JpaRepository<Livro, Long>{
-
+    public Livro findByNome(String nome);
 }

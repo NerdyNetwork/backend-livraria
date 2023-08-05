@@ -38,6 +38,15 @@ public class LivroService {
 			throw new DatabaseException("Erro no banco de dados");
 		}
 	}
+
+	public Livro findByName(String name) {
+		try {
+			Livro livro = livroRepository.findByNome(name);
+			return livro;
+		} catch (IllegalArgumentException err) {
+			throw new ResourceNotFoundException(name);
+		}
+	}
 	
 	public Set<Livro> bestSellers() throws DatabaseException{
 		List<Livro> allLivros = findAll();

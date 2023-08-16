@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.livraria.livraria.entities.Pedido;
 import com.livraria.livraria.entities.Usuario;
-import com.livraria.livraria.entities.dtos.UsuarioDTO;
+import com.livraria.livraria.entities.dtos.response.UsuarioDTO;
 import com.livraria.livraria.repositories.UsuarioRepository;
 import com.livraria.livraria.services.exceptions.DatabaseException;
 import com.livraria.livraria.services.exceptions.ResourceNotFoundException;

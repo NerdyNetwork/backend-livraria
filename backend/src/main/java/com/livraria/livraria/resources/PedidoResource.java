@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.livraria.livraria.entities.Pedido;
-import com.livraria.livraria.entities.dtos.PedidoUpdateDTO;
+import com.livraria.livraria.entities.dtos.response.PedidoUpdateDTO;
 import com.livraria.livraria.services.PedidoService;
 import com.livraria.livraria.services.exceptions.DatabaseException;
 import com.livraria.livraria.services.exceptions.ResourceNotFoundException;

@@ -1,4 +1,4 @@
-package com.livraria.livraria.entities.dtos;
+package com.livraria.livraria.entities.dtos.response;
 
 public class UsuarioDTO {
 	private Long id;

@@ -1,4 +1,4 @@
-package com.livraria.livraria.entities.dtos;
+package com.livraria.livraria.entities.dtos.response;
 
 import java.time.Instant;
 

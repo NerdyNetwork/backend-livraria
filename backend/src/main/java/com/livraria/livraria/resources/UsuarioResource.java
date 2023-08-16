@@ -22,7 +22,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.livraria.livraria.entities.Pedido;
 import com.livraria.livraria.entities.Usuario;
-import com.livraria.livraria.entities.dtos.UsuarioDTO;
+import com.livraria.livraria.entities.dtos.response.UsuarioDTO;
 import com.livraria.livraria.services.UsuarioService;
 import com.livraria.livraria.services.exceptions.ResourceNotFoundException;
 

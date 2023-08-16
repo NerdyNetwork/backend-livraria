@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.livraria.livraria.entities.Livro;
+import com.livraria.livraria.entities.dtos.response.BookDTO;
 import com.livraria.livraria.services.LivroService;
 import com.livraria.livraria.services.exceptions.DatabaseException;
 import com.livraria.livraria.services.exceptions.ResourceNotFoundException;
@@ -64,9 +65,9 @@ public class LivroResource {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<Livro>> findAll() {
+	public ResponseEntity<List<BookDTO>> findAll() {
 		try {
-			List<Livro> livros = livroService.findAll();
+			List<BookDTO> livros = livroService.findAllDtos();
 			return ResponseEntity.ok().body(livros);
 		} catch (DatabaseException err) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();

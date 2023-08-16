@@ -1,5 +1,6 @@
 package com.livraria.livraria.services;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.livraria.livraria.entities.Categoria;
 import com.livraria.livraria.entities.Livro;
+import com.livraria.livraria.entities.dtos.response.BookDTO;
 import com.livraria.livraria.repositories.LivroRepository;
 import com.livraria.livraria.services.exceptions.DatabaseException;
 import com.livraria.livraria.services.exceptions.ResourceNotFoundException;
@@ -30,12 +32,26 @@ public class LivroService {
 		return livro.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
-	public List<Livro> findAll() {
+	public List<BookDTO> findAllDtos() {
 		try {
-			List<Livro> livros = livroRepository.findAll();
-			return livros;
+			List<Livro> books = livroRepository.findAll();
+			List<BookDTO> booksDtos = new ArrayList<>();
+			for(Livro book : books) {
+				BookDTO bookDto = new BookDTO(book.getId(), book.getNome(), book.getQuantidadeCompras());
+				booksDtos.add(bookDto);
+			}
+			return booksDtos;
 		} catch (Exception err) {
 			throw new DatabaseException("Erro no banco de dados");
+		}
+	}
+
+	public List<Livro> findAll() {
+		try {
+			List<Livro> books = livroRepository.findAll();
+			return books;
+		} catch (Exception err) {
+			throw new DatabaseException("Erro no bando de dados");
 		}
 	}
 

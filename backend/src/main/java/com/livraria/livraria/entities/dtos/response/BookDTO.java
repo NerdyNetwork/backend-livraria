@@ -13,10 +13,11 @@ public class BookDTO implements Serializable{
     public BookDTO() {
     }
 
-    public BookDTO(Long id, String name) {
+    public BookDTO(Long id, String name, int amount) {
         this.id = id;
         this.name = name;
-    }
+        this.amount = amount;
+    }   
 
     public Long getId() {
         return id;

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import com.livraria.livraria.entities.Livro;
 import com.livraria.livraria.entities.Pedido;
 import com.livraria.livraria.entities.Usuario;
-import com.livraria.livraria.entities.dtos.PedidoUpdateDTO;
+import com.livraria.livraria.entities.dtos.response.PedidoUpdateDTO;
 import com.livraria.livraria.entities.enums.StatusDoPedido;
 import com.livraria.livraria.repositories.PedidoRepository;
 import com.livraria.livraria.repositories.UsuarioRepository;

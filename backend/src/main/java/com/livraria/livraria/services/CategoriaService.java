@@ -1,7 +1,9 @@
 package com.livraria.livraria.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -9,6 +11,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.livraria.livraria.entities.Categoria;
+import com.livraria.livraria.entities.Livro;
+import com.livraria.livraria.entities.dtos.response.BookDTO;
 import com.livraria.livraria.repositories.CategoriaRepository;
 import com.livraria.livraria.services.exceptions.DatabaseException;
 import com.livraria.livraria.services.exceptions.ResourceNotFoundException;
@@ -73,5 +77,22 @@ public class CategoriaService {
 	
 	private void updateCategoria(Categoria categoria, Categoria novaCategoria) {
 		categoria.setNome(novaCategoria.getNome());
+	}
+
+	public List<BookDTO> booksByCategorie(Long id) {
+		try {
+			Optional<Categoria> categoria = categoriaRepository.findById(id);
+			Set<Livro> books = categoria.get().getLivros();
+			List<BookDTO> booksDTOs = new ArrayList<>();
+
+			for(Livro book : books) {
+				BookDTO bookDTO = new BookDTO(book.getId(), book.getNome(), book.getQuantidadeCompras());
+				booksDTOs.add(bookDTO);
+			}
+
+			return booksDTOs;
+		} catch (IllegalArgumentException err) {
+			throw new ResourceNotFoundException(id);
+		}
 	}
 }

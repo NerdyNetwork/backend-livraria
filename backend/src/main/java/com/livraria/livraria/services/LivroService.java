@@ -1,99 +1,139 @@
-package com.livraria.livraria.resources;
+package com.livraria.livraria.services;
 
-import java.net.URI;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.stereotype.Service;
 
+import com.livraria.livraria.entities.Categoria;
 import com.livraria.livraria.entities.Livro;
-import com.livraria.livraria.services.LivroService;
+import com.livraria.livraria.entities.dtos.response.BookDTO;
+import com.livraria.livraria.repositories.LivroRepository;
 import com.livraria.livraria.services.exceptions.DatabaseException;
 import com.livraria.livraria.services.exceptions.ResourceNotFoundException;
 
-@RestController
-@RequestMapping(value = "/livros")
-@CrossOrigin(origins = "*")
-public class LivroResource {
+import jakarta.persistence.EntityNotFoundException;
+
+@Service
+public class LivroService {
 	
 	@Autowired
-	private LivroService livroService;
+	private LivroRepository livroRepository;
 	
-	@GetMapping(value = "/{id}")
-	public ResponseEntity<Livro> findById(@PathVariable Long id) {
+	public Livro findById(Long id) {
+		Optional<Livro> livro = livroRepository.findById(id);
+		return livro.orElseThrow(() -> new ResourceNotFoundException(id));
+	}
+	
+	public List<BookDTO> findAllDtos() {
 		try {
-			Livro livro = livroService.findById(id);
-			return ResponseEntity.ok().body(livro);
-		} catch(ResourceNotFoundException e) {
-			System.out.println("[Erro no FindById: ]" + e.getMessage());
-			return ResponseEntity.notFound().build();
+			List<Livro> books = livroRepository.findAll();
+			List<BookDTO> booksDtos = new ArrayList<>();
+			for(Livro book : books) {
+				BookDTO bookDto = new BookDTO(book.getId(), book.getNome(), book.getQuantidadeCompras());
+				booksDtos.add(bookDto);
+			}
+			return booksDtos;
+		} catch (Exception err) {
+			throw new DatabaseException("Erro no banco de dados");
+		}
+	}
+
+	public List<Livro> findAll() {
+		try {
+			List<Livro> books = livroRepository.findAll();
+			return books;
+		} catch (Exception err) {
+			throw new DatabaseException("Erro no bando de dados");
+		}
+	}
+
+	public Livro findByName(String name) {
+		try {
+			Livro livro = livroRepository.findByNome(name);
+			return livro;
+		} catch (IllegalArgumentException err) {
+			throw new ResourceNotFoundException(name);
 		}
 	}
 	
-	@GetMapping(value = "/bestsellers")
-	public ResponseEntity<Set<Livro>> bestSellersLivros() {
+	public Set<Livro> bestSellers() throws DatabaseException{
+		List<Livro> allLivros = findAll();
+		Set<Livro> bestSellers = new LinkedHashSet<>();
+		
+		// Ordena pelo atributo quantidade de compras
+		allLivros.sort(Comparator.comparing(Livro::getQuantidadeCompras).reversed());
+		
+		// Verifica se existe mais do que 20 livros, caso sim puxa os 20 mais vendidos, caso não puxa a quantidade que tem
+		for(int i = 0; i < ((allLivros.size() < 20) ? allLivros.size() : 20); i++) {
+			Livro livroSelecionado = allLivros.get(i);
+			bestSellers.add(livroSelecionado);
+		}
+		
+		return bestSellers;
+	}
+	
+	public Livro insert(Livro livro) {
 		try {
-			Set<Livro> bestSellers = livroService.bestSellers();
-			return ResponseEntity.ok().body(bestSellers);
-		} catch (DatabaseException err) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+			return livroRepository.save(livro);
+		} catch (IllegalArgumentException err) {
+			throw new DatabaseException("Erro no banco de dados");
 		}
 	}
 	
-	@GetMapping
-	public ResponseEntity<List<Livro>> findAll() {
+	public void deleteById(Long id) {
 		try {
-			List<Livro> livros = livroService.findAll();
-			return ResponseEntity.ok().body(livros);
-		} catch (DatabaseException err) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+			livroRepository.deleteById(id);
+		} catch (EmptyResultDataAccessException e) {
+			throw new ResourceNotFoundException(id);
+		} catch (DataIntegrityViolationException e) {
+			throw new DatabaseException(e.getMessage());
 		}
 	}
 	
-	@PostMapping
-	public ResponseEntity<Livro> insert(@RequestBody Livro livro) {
+	public Livro updateLivro(Long id, Livro novoLivro) {
 		try {
-			livro = livroService.insert(livro);
-			URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(livro.getId()).toUri();
-			return ResponseEntity.created(uri).body(livro);
-		} catch (DatabaseException err) {
-			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+			Livro livro = livroRepository.getReferenceById(id);
+			updateLivro(livro, novoLivro);
+			return livroRepository.save(livro);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
 		}
 	}
 	
-	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+	public Livro updateQuantiVendasLivro(Long id) {
 		try {
-			livroService.deleteById(id);
-			return ResponseEntity.noContent().build();
-		} catch (ResourceNotFoundException err) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-		} catch (DatabaseException err) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+			Livro livro = livroRepository.getReferenceById(id);
+			livro.atualizarQuantidadeCompras();
+			return livroRepository.save(livro);
+		}catch(EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		} catch (IllegalArgumentException err) {
+			throw new DatabaseException("Erro no banco de dados");
 		}
 	}
 	
-	@PutMapping(value = "/{id}")
-	public ResponseEntity<Livro> updateLivro(@PathVariable Long id, @RequestBody Livro novoLivro) {
-		try {
-			novoLivro = livroService.updateLivro(id, novoLivro);
-			return ResponseEntity.ok().body(novoLivro);
-		} catch (ResourceNotFoundException err) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-		} catch (DatabaseException err) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+	private void updateLivro(Livro livro, Livro novoLivro) {
+		livro.setNome(novoLivro.getNome());
+		livro.setDescricao(novoLivro.getDescricao());
+		livro.setEditora(novoLivro.getEditora());
+		livro.setIsbn(novoLivro.getIsbn());
+		livro.setCodigoDeBarras(novoLivro.getCodigoDeBarras());
+		livro.setAutor(novoLivro.getAutor());
+		livro.setFornecedor(novoLivro.getFornecedor());
+		livro.setQuantidadeCompras(novoLivro.getQuantidadeCompras());
+		if(novoLivro.getCategorias().size() != 0) {
+			livro.getCategorias().clear();
+			for(Categoria categoria : novoLivro.getCategorias()) {
+				livro.getCategorias().add(categoria);
+			}
 		}
 	}
 }

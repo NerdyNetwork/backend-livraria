@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.livraria.livraria.entities.Categoria;
+import com.livraria.livraria.entities.dtos.response.BookDTO;
 import com.livraria.livraria.services.CategoriaService;
 import com.livraria.livraria.services.exceptions.DatabaseException;
 import com.livraria.livraria.services.exceptions.ResourceNotFoundException;
@@ -89,6 +90,16 @@ public class CategoriaResource {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		} catch (DatabaseException err) {
 			return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+		}
+	}
+
+	@GetMapping(value = "/booksCategories/{id}")
+	public ResponseEntity<List<BookDTO>> booksByCategorie(@PathVariable Long id) {
+		try {
+			List<BookDTO> books = categoriaService.booksByCategorie(id);
+			return ResponseEntity.status(HttpStatus.OK).body(books);
+		} catch (ResourceNotFoundException err) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 	}
 }

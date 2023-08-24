@@ -22,7 +22,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.livraria.livraria.entities.Pedido;
 import com.livraria.livraria.entities.Usuario;
-import com.livraria.livraria.entities.dtos.response.UsuarioDTO;
+import com.livraria.livraria.entities.dtos.response.UserDTO;
 import com.livraria.livraria.services.UsuarioService;
 import com.livraria.livraria.services.exceptions.ResourceNotFoundException;
 
@@ -38,9 +38,9 @@ public class UsuarioResource {
 	private PasswordEncoder encoder;
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<UsuarioDTO> findById(@PathVariable Long id) {
+	public ResponseEntity<UserDTO> findById(@PathVariable Long id) {
 		try {
-			UsuarioDTO usuario = usuarioService.findById(id);
+			UserDTO usuario = usuarioService.findById(id);
 			return ResponseEntity.ok().body(usuario);
 		} catch (ResourceNotFoundException e) {
 			return ResponseEntity.notFound().build();
@@ -48,8 +48,8 @@ public class UsuarioResource {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<UsuarioDTO>> findAll() {
-		List<UsuarioDTO> list = usuarioService.findAll();
+	public ResponseEntity<List<UserDTO>> findAll() {
+		List<UserDTO> list = usuarioService.findAll();
 		if(list.size() != 0) {
 			return ResponseEntity.ok().body(list);
 		} 
@@ -81,9 +81,9 @@ public class UsuarioResource {
 	}
 	
 	@PostMapping(value = "/cadastrar")
-	public ResponseEntity<UsuarioDTO> insert(@RequestBody Usuario usuario) {
+	public ResponseEntity<UserDTO> insert(@RequestBody Usuario usuario) {
 		try {
-			UsuarioDTO userDto = usuarioService.insert(usuario);
+			UserDTO userDto = usuarioService.insert(usuario);
 			URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(usuario.getId()).toUri();
 			return ResponseEntity.created(uri).body(userDto);
 		} catch(DataIntegrityViolationException e) {
@@ -98,9 +98,9 @@ public class UsuarioResource {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<UsuarioDTO> updateUsuario(@PathVariable Long id, @RequestBody Usuario usuario){
+	public ResponseEntity<UserDTO> updateUsuario(@PathVariable Long id, @RequestBody Usuario usuario){
 		try {
-			UsuarioDTO userDto = usuarioService.updateUsuario(id, usuario);
+			UserDTO userDto = usuarioService.updateUsuario(id, usuario);
 			return ResponseEntity.ok().body(userDto);
 		} catch(ResourceNotFoundException e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

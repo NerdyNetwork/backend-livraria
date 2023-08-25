@@ -54,10 +54,10 @@ public class LivroResource {
 		}
 	}
 	
-	@GetMapping(value = "/bestsellers")
-	public ResponseEntity<Set<Livro>> bestSellersLivros() {
+	@GetMapping(value = "/bestSellers")
+	public ResponseEntity<Set<BookDTO>> bestSellersLivros() {
 		try {
-			Set<Livro> bestSellers = livroService.bestSellers();
+			Set<BookDTO> bestSellers = livroService.bestSellers();
 			return ResponseEntity.ok().body(bestSellers);
 		} catch (DatabaseException err) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -67,7 +67,7 @@ public class LivroResource {
 	@GetMapping
 	public ResponseEntity<List<BookDTO>> findAll() {
 		try {
-			List<BookDTO> livros = livroService.findAllDtos();
+			List<BookDTO> livros = livroService.findAll();
 			return ResponseEntity.ok().body(livros);
 		} catch (DatabaseException err) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();

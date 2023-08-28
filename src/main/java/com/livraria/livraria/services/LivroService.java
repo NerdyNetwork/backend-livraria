@@ -135,4 +135,16 @@ public class LivroService {
 			}
 		}
 	}
+
+	public BookDTO amountUpdate(Long id, int amount) {
+		try {
+			Livro book = findById(id);
+			book.setQuantidadeCompras(book.getQuantidadeCompras() + amount);
+			livroRepository.save(book);
+			BookDTO bookDTO = new BookDTO(book.getId(), book.getNome(), book.getQuantidadeCompras());
+			return bookDTO;
+		} catch (IllegalArgumentException err) {
+			throw new ResourceNotFoundException(id);
+		}
+	}
 }

@@ -108,4 +108,14 @@ public class LivroResource {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 	}
+
+	@PutMapping(value = "/amountUpdate/{id}") 
+	public ResponseEntity<BookDTO> amountUpdate(@PathVariable Long id, @RequestParam int amount) {
+		try {
+			BookDTO book = livroService.amountUpdate(id, amount);
+			return ResponseEntity.status(HttpStatus.OK).body(book);
+		} catch (ResourceNotFoundException err) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+	}
 }

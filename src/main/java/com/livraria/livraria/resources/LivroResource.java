@@ -27,7 +27,7 @@ import com.livraria.livraria.services.exceptions.ResourceNotFoundException;
 
 @RestController
 @RequestMapping(value = "/livros")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "${frontend_url}")
 public class LivroResource {
 	
 	@Autowired
@@ -54,10 +54,10 @@ public class LivroResource {
 		}
 	}
 	
-	@GetMapping(value = "/bestsellers")
-	public ResponseEntity<Set<Livro>> bestSellersLivros() {
+	@GetMapping(value = "/bestSellers")
+	public ResponseEntity<Set<BookDTO>> bestSellersLivros() {
 		try {
-			Set<Livro> bestSellers = livroService.bestSellers();
+			Set<BookDTO> bestSellers = livroService.bestSellers();
 			return ResponseEntity.ok().body(bestSellers);
 		} catch (DatabaseException err) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -67,7 +67,7 @@ public class LivroResource {
 	@GetMapping
 	public ResponseEntity<List<BookDTO>> findAll() {
 		try {
-			List<BookDTO> livros = livroService.findAllDtos();
+			List<BookDTO> livros = livroService.findAll();
 			return ResponseEntity.ok().body(livros);
 		} catch (DatabaseException err) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -106,6 +106,16 @@ public class LivroResource {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		} catch (DatabaseException err) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+		}
+	}
+
+	@PutMapping(value = "/amountUpdate/{id}") 
+	public ResponseEntity<BookDTO> amountUpdate(@PathVariable Long id, @RequestParam int amount) {
+		try {
+			BookDTO book = livroService.amountUpdate(id, amount);
+			return ResponseEntity.status(HttpStatus.OK).body(book);
+		} catch (ResourceNotFoundException err) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 	}
 }

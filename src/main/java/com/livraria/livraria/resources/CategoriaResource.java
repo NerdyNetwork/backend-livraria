@@ -26,7 +26,7 @@ import com.livraria.livraria.services.exceptions.ResourceNotFoundException;
 
 @RestController
 @RequestMapping(value = "/categorias")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "${frontend_url}")
 public class CategoriaResource {
 
 	@Autowired

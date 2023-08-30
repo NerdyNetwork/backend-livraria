@@ -32,7 +32,7 @@ public class LivroService {
 		return livro.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
-	public List<BookDTO> findAllDtos() {
+	public List<BookDTO> findAll() {
 		try {
 			List<Livro> books = livroRepository.findAll();
 			List<BookDTO> booksDtos = new ArrayList<>();
@@ -46,15 +46,6 @@ public class LivroService {
 		}
 	}
 
-	public List<Livro> findAll() {
-		try {
-			List<Livro> books = livroRepository.findAll();
-			return books;
-		} catch (Exception err) {
-			throw new DatabaseException("Erro no bando de dados");
-		}
-	}
-
 	public Livro findByName(String name) {
 		try {
 			Livro livro = livroRepository.findByNome(name);
@@ -64,20 +55,28 @@ public class LivroService {
 		}
 	}
 	
-	public Set<Livro> bestSellers() throws DatabaseException{
-		List<Livro> allLivros = findAll();
-		Set<Livro> bestSellers = new LinkedHashSet<>();
-		
+	public Set<BookDTO> bestSellers() throws DatabaseException {
+		try {
+			List<BookDTO> allBooks = findAll();
+			Set<BookDTO> bestSellersBooks = new LinkedHashSet<>();
+
+			organizeBestSellersBooks(allBooks, bestSellersBooks);
+
+			return bestSellersBooks;
+		} catch (Exception err) {
+			throw new DatabaseException(err.getMessage());
+		}
+	}
+
+	private void organizeBestSellersBooks(List<BookDTO> allBooks, Set<BookDTO> bestSellersBooks) {
 		// Ordena pelo atributo quantidade de compras
-		allLivros.sort(Comparator.comparing(Livro::getQuantidadeCompras).reversed());
+		allBooks.sort(Comparator.comparing(BookDTO::amount).reversed());
 		
 		// Verifica se existe mais do que 20 livros, caso sim puxa os 20 mais vendidos, caso não puxa a quantidade que tem
-		for(int i = 0; i < ((allLivros.size() < 20) ? allLivros.size() : 20); i++) {
-			Livro livroSelecionado = allLivros.get(i);
-			bestSellers.add(livroSelecionado);
+		for(int i = 0; i < ((allBooks.size() < 20) ? allBooks.size() : 20); i++) {
+			BookDTO livroSelecionado = allBooks.get(i);
+			bestSellersBooks.add(livroSelecionado);
 		}
-		
-		return bestSellers;
 	}
 	
 	public Livro insert(Livro livro) {
@@ -134,6 +133,18 @@ public class LivroService {
 			for(Categoria categoria : novoLivro.getCategorias()) {
 				livro.getCategorias().add(categoria);
 			}
+		}
+	}
+
+	public BookDTO amountUpdate(Long id, int amount) {
+		try {
+			Livro book = findById(id);
+			book.setQuantidadeCompras(book.getQuantidadeCompras() + amount);
+			livroRepository.save(book);
+			BookDTO bookDTO = new BookDTO(book.getId(), book.getNome(), book.getQuantidadeCompras());
+			return bookDTO;
+		} catch (IllegalArgumentException err) {
+			throw new ResourceNotFoundException(id);
 		}
 	}
 }
